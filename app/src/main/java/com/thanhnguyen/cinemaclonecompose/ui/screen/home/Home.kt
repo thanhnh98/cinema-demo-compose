@@ -37,6 +37,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.thanhnguyen.cinemaclonecompose.R
+import com.thanhnguyen.cinemaclonecompose.ui.components.BottomNavigation
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.MovieTest
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
@@ -68,12 +69,13 @@ fun HomePage(){
                     Banners()
                     ListCategories()
                     MostPopular()
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp)
+                        .wrapContentHeight()
                         .background(
                             color = ColorPrimaryDark
                         )
@@ -81,12 +83,7 @@ fun HomePage(){
                             bottom.linkTo(parent.bottom)
                         }
                 ) {
-                    val selected = remember {
-                        mutableStateOf(1)
-                    }
-                    Row {
-
-                    }
+                    BottomNavigation()
                 }
             }
         }
@@ -378,24 +375,36 @@ fun SearchBar() {
             shape = RoundedCornerShape(24.dp)
         )
     ) {
-       Row(
+       ConstraintLayout(
            modifier = Modifier
                .padding(16.dp)
+               .wrapContentHeight()
+               .fillMaxWidth()
                .align(Alignment.CenterStart),
-           verticalAlignment = Alignment.CenterVertically,
        ) {
+           val (icSearch, edtSearch, vLine, icFilter)  = createRefs()
+
            Image(
                painterResource(id = R.drawable.ic_search),
                contentDescription = "",
                modifier = Modifier
+                   .constrainAs(icSearch) {
+                       start.linkTo(parent.start)
+                       top.linkTo(parent.top)
+                       bottom.linkTo(parent.bottom)
+                   }
                    .width(20.dp)
                    .height(20.dp)
            )
 
-           Spacer(modifier = Modifier.width(8.dp))
-
            Box(modifier = Modifier
-               .fillMaxWidth()
+               .constrainAs(edtSearch){
+                   start.linkTo(icSearch.end, margin = 8.dp)
+                   top.linkTo(icSearch.top)
+                   bottom.linkTo(icSearch.bottom)
+                   end.linkTo(vLine.start, margin = 4.dp)
+                   width = Dimension.fillToConstraints
+               }
            ){
                BasicTextField(
                    value = textValue.value,
@@ -417,6 +426,32 @@ fun SearchBar() {
                    ),
                        modifier = Modifier.align(alignment = Alignment.CenterStart))
            }
+
+           Spacer(modifier = Modifier
+               .constrainAs(vLine){
+                   end.linkTo(icFilter.start, margin = 4.dp)
+                   top.linkTo(icFilter.top)
+                   bottom.linkTo(icFilter.bottom)
+               }
+               .width(1.dp)
+               .height(20.dp)
+               .background(
+                   color = Grey
+               )
+           )
+
+           Image(
+               painterResource(id = R.drawable.ic_filter),
+               contentDescription = "",
+               modifier = Modifier
+                   .constrainAs(icFilter) {
+                       end.linkTo(parent.end)
+                       top.linkTo(parent.top)
+                       bottom.linkTo(parent.bottom)
+                   }
+                   .width(20.dp)
+                   .height(20.dp)
+           )
        }
     }
 }
@@ -429,7 +464,8 @@ fun Greeting() {
             .padding(
                 start = 16.dp,
                 end = 16.dp,
-                bottom = 16.dp
+                bottom = 16.dp,
+                top = 16.dp
             )
             .fillMaxWidth()
     ) {
