@@ -16,6 +16,11 @@ val ColorPrimaryDark = Color(0xFF1f1d2b)
 val ColorPrimarySoft = Color(0xFF252836)
 val ColorPrimarySoft79 = Color(0xC9252836)
 val ColorBlueAccent = Color(0xFF12CDD9)
+val ColorBlueAccentBlur50 = Color(0x8012CDD9)
+val ColorOrange = Color(0xFFFF9800)
+
+val ColorBackgroundGradientStart = Color(0x1F1D2B)
+val ColorBackgroundGradientStop = Color(0xB51F1D2B)
 
 object TextColor {
     val Black = Color(0xFF171725)
