@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose
+package com.thanhnguyen.cinemaclonecompose.ui.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

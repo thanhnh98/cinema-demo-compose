@@ -23,6 +23,7 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import com.thanhnguyen.cinemaclonecompose.R
+import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
 
 @Composable
 fun ListMovieHorizontal(
@@ -66,9 +67,8 @@ fun ListMovieHorizontal(
 
 @Preview
 @Composable
-fun MovieItemHorizontal(movie1: Movie) {
+fun MovieItemHorizontal(movie: Movie) {
     val corner = 15.dp
-    val movie = MovieTest
     Box(modifier = Modifier
         .wrapContentWidth()
         .wrapContentHeight()
@@ -180,19 +180,3 @@ fun MovieItemHorizontal(movie1: Movie) {
         }
     }
 }
-
-data class Movie(
-    val id: Int,
-    val thumbnail: String,
-    val name: String,
-    val type: String,
-    val rating: Double
-)
-
-val MovieTest = Movie(
-    1,
-    "https://image.lag.vn/upload/news/18/08/26/5-15352610750551894511556_SZGH.png",
-    "Onepice chất lượng cao",
-    "Cartoon",
-    4.2
-)

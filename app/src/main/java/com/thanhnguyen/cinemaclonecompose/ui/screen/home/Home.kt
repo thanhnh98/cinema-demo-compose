@@ -37,9 +37,11 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.thanhnguyen.cinemaclonecompose.R
+import com.thanhnguyen.cinemaclonecompose.ui.common.listBannersData
+import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.BottomNavigation
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
-import com.thanhnguyen.cinemaclonecompose.ui.components.MovieTest
+import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -98,11 +100,7 @@ fun MostPopular() {
             start = 16.dp
         ),
         title = "Most popular",
-        listOf(
-            MovieTest,
-            MovieTest,
-            MovieTest,
-        )
+        listMovies = listMovieHorizontal
     )
 }
 
@@ -203,6 +201,7 @@ fun ItemCategory(
 fun Banners() {
     val composableScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
+    val listBanners = listBannersData
 
     Column(
         modifier = Modifier
@@ -211,7 +210,7 @@ fun Banners() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HorizontalPager(
-            count = 3,
+            count = listBanners.size,
             contentPadding = PaddingValues(start = 40.dp, end = 40.dp),
             modifier = Modifier.padding(top = 16.dp),
             state = pagerState
@@ -242,21 +241,21 @@ fun Banners() {
                         ).value
                     }
             ) {
-                ItemBanner(pos = page)
+                ItemBanner(listBanners[page])
             }
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
         DotsIndicator(
-            totalDots = 3,
-            selectedIndex = pagerState.currentPage,
+            totalDots = listBanners.size,
+            selectedIndex = pagerState.currentPage % listBanners.size,
             selectedColor = ColorBlueAccent,
             unSelectedColor = ColorBlueAccentBlur50
         )
     }
     composableScope.launch {
-        pagerState.scrollToPage(1)
+        pagerState.scrollToPage(0)
     }
 }
 
@@ -302,7 +301,7 @@ fun DotsIndicator(
 }
 
 @Composable
-fun ItemBanner(pos: Int){
+fun ItemBanner(banner: Banner){
     Box(modifier = Modifier
         .fillMaxWidth()
         .height(140.dp)
@@ -316,7 +315,7 @@ fun ItemBanner(pos: Int){
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(20.dp)),
             contentScale = ContentScale.Crop,
-            model = "https://gamek.mediacdn.vn/thumb_w/600/133514250583805952/2022/3/28/photo-1-1648463807426792939448.jpg",
+            model = banner.thumbnail,
             contentDescription = null
         )
 
@@ -347,14 +346,14 @@ fun ItemBanner(pos: Int){
             verticalArrangement = Arrangement.Bottom
         ) {
             Text(
-                "Luffy chap 1044",
+                banner.title,
                 style = TextStyle().bold()
             )
 
             Spacer(modifier = Modifier.height(6.dp))
 
             Text(
-                text = "Page $pos: Cái huân hòe gỉ đây",
+                text = banner.content,
                 style = TextStyle().normal()
             )
         }
@@ -406,20 +405,20 @@ fun SearchBar() {
                    width = Dimension.fillToConstraints
                }
            ){
-               BasicTextField(
-                   value = textValue.value,
-                   onValueChange = {
-                       textValue.value = it
-                   },
-                   modifier = Modifier
-                       .fillMaxWidth(),
-                   textStyle = TextStyle(
-                       color = TextColor.White,
-                       fontSize = 16.sp
-                   ),
-                   singleLine = true
-               )
-               if (textValue.value.text.isEmpty())
+//               BasicTextField(
+//                   value = textValue.value,
+//                   onValueChange = {
+//                       textValue.value = it
+//                   },
+//                   modifier = Modifier
+//                       .fillMaxWidth(),
+//                   textStyle = TextStyle(
+//                       color = TextColor.White,
+//                       fontSize = 16.sp
+//                   ),
+//                   singleLine = true
+//               )
+//               if (textValue.value.text.isEmpty())
                    Text(text = "Search a movie...", style = TextStyle(
                        color = TextColor.Grey,
                        fontSize = 16.sp
