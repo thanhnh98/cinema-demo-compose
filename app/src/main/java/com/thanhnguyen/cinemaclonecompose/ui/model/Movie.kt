@@ -5,5 +5,8 @@ data class Movie(
     val thumbnail: String,
     val name: String,
     val type: String,
-    val rating: Double
+    val rating: Double,
+    val accountType: AccountType = AccountType.Free,
+    val releaseYear: String,
+    val durationMinute: Int
 )

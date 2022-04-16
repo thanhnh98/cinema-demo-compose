@@ -38,7 +38,7 @@ fun ListMovieHorizontal(
         ) {
             Text(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(3f)
                     .wrapContentWidth(
                         Alignment.Start
                     ),
@@ -65,7 +65,6 @@ fun ListMovieHorizontal(
     }
 }
 
-@Preview
 @Composable
 fun MovieItemHorizontal(movie: Movie) {
     val corner = 15.dp

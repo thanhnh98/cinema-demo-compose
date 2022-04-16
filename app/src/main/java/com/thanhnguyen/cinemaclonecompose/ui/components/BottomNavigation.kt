@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -19,21 +20,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccent
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccentBlur20
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
 import com.thanhnguyen.cinemaclonecompose.ui.theme.Grey
+import kotlinx.coroutines.launch
 
+@ExperimentalPagerApi
 @Composable
 fun BottomNavigation(
-    tabs: List<NavTab> = listOf(
-        NavTab.HOME,
-        NavTab.SEARCH,
-        NavTab.DOWNLOAD,
-        NavTab.PROFILE
-    )
+    pagerState: PagerState
 ){
+    val coroutineScope = rememberCoroutineScope()
+
     val tabSelected = remember {
         mutableStateOf(NavTab.HOME)
     }
@@ -64,6 +66,9 @@ fun BottomNavigation(
             NavTab.HOME
         ){
             tabSelected.value = it
+            coroutineScope.launch {
+                pagerState.animateScrollToPage(0)
+            }
         }
 
         NavTabView(
@@ -79,6 +84,9 @@ fun BottomNavigation(
             NavTab.SEARCH
         ){
             tabSelected.value = it
+            coroutineScope.launch {
+                pagerState.animateScrollToPage(1)
+            }
         }
 
         NavTabView(
@@ -94,6 +102,9 @@ fun BottomNavigation(
             NavTab.DOWNLOAD
         ){
             tabSelected.value = it
+            coroutineScope.launch {
+                pagerState.animateScrollToPage(2)
+            }
         }
 
         NavTabView(
@@ -109,6 +120,9 @@ fun BottomNavigation(
             NavTab.PROFILE
         ){
             tabSelected.value = it
+            coroutineScope.launch {
+                pagerState.animateScrollToPage(3)
+            }
         }
     }
 }

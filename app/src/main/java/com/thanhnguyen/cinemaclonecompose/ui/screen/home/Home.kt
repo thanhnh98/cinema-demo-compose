@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,8 +28,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -40,8 +41,10 @@ import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.common.listBannersData
 import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.BottomNavigation
+import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
+import com.thanhnguyen.cinemaclonecompose.ui.navigator.Route
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -50,43 +53,19 @@ import kotlin.math.absoluteValue
 @Composable
 fun HomePage(){
     CinemaCloneComposeTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = ColorPrimaryDark
-        ) {
-            ConstraintLayout {
-                val (mainPage, nav) = createRefs()
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .constrainAs(mainPage) {
-                            bottom.linkTo(nav.top)
-                            top.linkTo(parent.top)
-                            height = Dimension.fillToConstraints
-                        }
-                        .verticalScroll(rememberScrollState()),
-                ) {
-                    Greeting()
-                    SearchBar()
-                    Banners()
-                    ListCategories()
-                    MostPopular()
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .background(
-                            color = ColorPrimaryDark
-                        )
-                        .constrainAs(nav) {
-                            bottom.linkTo(parent.bottom)
-                        }
-                ) {
-                    BottomNavigation()
-                }
+        Box(modifier = Modifier
+            .background(color = ColorPrimaryDark)){
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                Greeting()
+                SearchBar()
+                Banners()
+                ListCategories()
+                MostPopular()
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
@@ -113,47 +92,20 @@ fun ListCategories() {
         "Hentai",
         "Document",
     )
-    val posSelected = remember{
-        mutableStateOf(0)
-    }
-
     Column(
-        horizontalAlignment = Alignment.Start,
         modifier = Modifier.padding(
-            top = 24.dp,
             start = 16.dp
         )
     ) {
-        Text(text = "Categories", style = TextStyle().bold())
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        LazyRow(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-            userScrollEnabled = true
-        ) {
-            items(listCategories.size){ pos ->
-                if (pos == posSelected.value){
-                    ItemCategory(
-                        pos = pos,
-                        isSelected = true,
-                        content = listCategories[pos]
-                    ){
-                        posSelected.value = it
-                    }
-                }
-                else {
-                    ItemCategory(
-                        pos = pos,
-                        isSelected = false,
-                        content = listCategories[pos]
-                    ){
-                        posSelected.value = it
-                    }
-                }
-            }
-        }
+        Text(
+            modifier = Modifier.padding(
+                top = 24.dp,
+                bottom = 16.dp,
+            ),
+            text = "Categories",
+            style = TextStyle().bold()
+        )
+        ListChips(listCategories)
     }
 }
 
@@ -373,6 +325,9 @@ fun SearchBar() {
             color = ColorPrimarySoft,
             shape = RoundedCornerShape(24.dp)
         )
+        .clickable {
+//            nav.navigate(Route.SEARCH)
+        }
     ) {
        ConstraintLayout(
            modifier = Modifier
@@ -427,7 +382,7 @@ fun SearchBar() {
            }
 
            Spacer(modifier = Modifier
-               .constrainAs(vLine){
+               .constrainAs(vLine) {
                    end.linkTo(icFilter.start, margin = 4.dp)
                    top.linkTo(icFilter.top)
                    bottom.linkTo(icFilter.bottom)

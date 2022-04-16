@@ -1,5 +1,6 @@
 package com.thanhnguyen.cinemaclonecompose.ui.common
 
+import com.thanhnguyen.cinemaclonecompose.ui.model.AccountType
 import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
 import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
 
@@ -37,41 +38,71 @@ val listMovieHorizontal = listOf(
         "https://static.wikia.nocookie.net/onepiece/images/f/fd/Movie_10_Poster.png/revision/latest?cb=20130116014223",
         "One Piece Strong World",
         "Cartoon",
-        4.2
+        4.2,
+        AccountType.Free,
+        "2022",
+        150,
     ),
     Movie(
         2,
         "https://2.bp.blogspot.com/-B1jLgaPQVVc/VhnZsyA8VDI/AAAAAAAAO2o/orIwD_u207A/s0/One-Piece-Movie-12-Film-Z-Poster-1.jpg",
         "One Piece Film GOLD",
         "Cartoon",
-        5.0
+        5.0,
+        AccountType.Free,
+        "2022",
+        150,
     ),
     Movie(
         3,
         "https://gamek.mediacdn.vn/thumb_w/640/133514250583805952/2022/4/14/gut3-16499271078161909466544.jpg",
         "One Piece Film RED",
         "Cartoon",
-        4.7
+        4.7,
+        AccountType.Free,
+        "2022",
+        150,
     ),
     Movie(
         4,
         "https://image.lag.vn/upload/news/18/08/26/5-15352610750551894511556_SZGH.png",
         "Onepice chất lượng cao",
         "Cartoon",
-        4.8
+        4.8,
+        AccountType.Free,
+        "2022",
+        150,
     ),
     Movie(
         5,
         "https://lh3.googleusercontent.com/-wqLW7DFsWfs/XizQzduiIBI/AAAAAAAAGwE/Fb7kMmkLqLcCJXbF3oucXGqUbF__s5sYQCLcBGAsYHQ/s0/Phimplay_onepiece-1-dao-hai-tac-9.jpg",
         "One Piece Chopper Story",
         "Cartoon",
-        4.2
+        4.2,
+        AccountType.Free,
+        "2022",
+        150,
     ),
     Movie(
         6,
         "https://jpsharing.net/wp-content/uploads/2021/11/one-piece-film-red-1.jpg",
         "Nami đẹp vãi chưởng",
         "Cartoon",
-        4.2
+        4.2,
+        AccountType.Free,
+        "2022",
+        150,
     ),
 )
+
+val highLightMovie =
+    Movie(
+        5,
+        "https://lh3.googleusercontent.com/-wqLW7DFsWfs/XizQzduiIBI/AAAAAAAAGwE/Fb7kMmkLqLcCJXbF3oucXGqUbF__s5sYQCLcBGAsYHQ/s0/Phimplay_onepiece-1-dao-hai-tac-9.jpg",
+        "One Piece Chopper Story",
+        "Cartoon",
+        4.2,
+        AccountType.Free,
+        "2022",
+        150,
+    )
