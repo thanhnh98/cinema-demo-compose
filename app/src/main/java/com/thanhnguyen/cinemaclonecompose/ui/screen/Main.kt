@@ -49,10 +49,10 @@ fun MainScreen(nav: NavController) {
                     userScrollEnabled = false
                 ) { pos ->
                     when(pos){
-                        0 -> MovieDetailScreen(highLightMovie)
-                        1 -> SearchScreen()
-                        3 -> HomeScreen()
-                        4 -> SearchScreen()
+                        0 -> MovieDetailScreen(nav, highLightMovie)
+                        1 -> SearchScreen(nav)
+                        3 -> HomeScreen(nav)
+                        4 -> SearchScreen(nav)
                     }
                 }
 

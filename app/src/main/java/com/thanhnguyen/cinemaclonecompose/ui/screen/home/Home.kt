@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +27,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
@@ -40,12 +38,12 @@ import com.google.accompanist.pager.rememberPagerState
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.common.listBannersData
 import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
-import com.thanhnguyen.cinemaclonecompose.ui.components.BottomNavigation
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
-import com.thanhnguyen.cinemaclonecompose.ui.navigator.Route
+import com.thanhnguyen.cinemaclonecompose.ui.navigator.Screen
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.utils.toJson
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
@@ -64,7 +62,7 @@ fun HomeScreen(nav: NavController){
                 SearchBar()
                 Banners()
                 ListCategories()
-                MostPopular()
+                MostPopular(nav)
                 Spacer(modifier = Modifier.height(10.dp))
             }
         }
@@ -72,7 +70,7 @@ fun HomeScreen(nav: NavController){
 }
 
 @Composable
-fun MostPopular() {
+fun MostPopular(navController: NavController) {
     ListMovieHorizontal(
         modifier = Modifier.padding(
             top = 32.dp,
@@ -80,7 +78,13 @@ fun MostPopular() {
         ),
         title = "Most popular",
         listMovies = listMovieHorizontal
-    )
+    ){
+        navController.navigate(
+            Screen.Movie.route_detail.replace(
+                "{movie_json_data}", it.toJson()
+            )
+        )
+    }
 }
 
 @Composable

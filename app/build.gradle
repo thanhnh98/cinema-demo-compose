@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.20'
 }
 
 android {
@@ -65,4 +66,5 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.0.0-rc03")
     implementation("androidx.navigation:navigation-compose:2.4.2")
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.6-alpha"
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2'
 }

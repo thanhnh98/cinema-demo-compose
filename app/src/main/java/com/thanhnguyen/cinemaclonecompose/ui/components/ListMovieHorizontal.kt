@@ -2,6 +2,7 @@ package com.thanhnguyen.cinemaclonecompose.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,7 +30,8 @@ import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
 fun ListMovieHorizontal(
     modifier: Modifier = Modifier,
     title: String,
-    listMovies: List<Movie>
+    listMovies: List<Movie>,
+    onMovieSelected: (Movie) -> Unit
 ){
     Column(modifier = modifier) {
         Row(
@@ -59,16 +61,24 @@ fun ListMovieHorizontal(
             userScrollEnabled = true
         ){
             items(listMovies.size){ position ->
-                MovieItemHorizontal(listMovies[position])
+                MovieItemHorizontal(
+                    modifier = Modifier.clickable {
+                        onMovieSelected.invoke(listMovies[position])
+                    },
+                    listMovies[position]
+                )
             }
         }
     }
 }
 
 @Composable
-fun MovieItemHorizontal(movie: Movie) {
+fun MovieItemHorizontal(
+    modifier: Modifier = Modifier,
+    movie: Movie
+) {
     val corner = 15.dp
-    Box(modifier = Modifier
+    Box(modifier = modifier
         .wrapContentWidth()
         .wrapContentHeight()
         .padding(end = 16.dp)){

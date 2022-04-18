@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -26,7 +25,9 @@ import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.ToDayMovie
+import com.thanhnguyen.cinemaclonecompose.ui.navigator.Screen
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.utils.toJson
 
 @ExperimentalMaterial3Api
 @Composable
@@ -59,7 +60,7 @@ fun SearchScreen(nav: NavController) {
                     ),
                     highLightMovie
                 )
-                RecommendedMovies()
+                RecommendedMovies(nav)
             }
         }
     }
@@ -67,14 +68,20 @@ fun SearchScreen(nav: NavController) {
 
 
 @Composable
-fun RecommendedMovies() {
+fun RecommendedMovies(nav: NavController) {
     ListMovieHorizontal(
         modifier = Modifier.padding(
             top = 32.dp,
         ),
         title = "Recommended for you",
         listMovies = listMovieHorizontal
-    )
+    ){
+        nav.navigate(
+            Screen.Movie.route_detail.replace(
+                "{movie_json_data}", it.toJson()
+            )
+        )
+    }
 }
 
 @Composable
