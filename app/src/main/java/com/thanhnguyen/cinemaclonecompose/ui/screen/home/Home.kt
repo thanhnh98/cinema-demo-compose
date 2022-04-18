@@ -51,7 +51,7 @@ import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
-fun HomePage(){
+fun HomeScreen(nav: NavController){
     CinemaCloneComposeTheme {
         Box(modifier = Modifier
             .background(color = ColorPrimaryDark)){
