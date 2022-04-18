@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.common.highLightMovie
 import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
@@ -29,7 +30,7 @@ import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchPage() {
+fun SearchScreen(nav: NavController) {
     CinemaCloneComposeTheme {
         Box(
             modifier = Modifier
