@@ -9,14 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.thanhnguyen.cinemaclonecompose.ui.theme.bold
+import com.thanhnguyen.cinemaclonecompose.ui.theme.normal
 
-@Preview
 @Composable
 fun ActionBar(
     modifier: Modifier = Modifier,
@@ -76,8 +77,8 @@ fun ActionBar(
                 modifier = Modifier
                     .wrapContentHeight()
                     .padding(
-                        start = 10.dp,
-                        end = 10.dp
+                        start = 20.dp,
+                        end = 20.dp
                     )
                     .constrainAs(tvTitle){
                         start.linkTo(icBack.end)
@@ -89,7 +90,8 @@ fun ActionBar(
                     },
                 text = title,
                 style = TextStyle().bold(),
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center
             )
         }
     }
