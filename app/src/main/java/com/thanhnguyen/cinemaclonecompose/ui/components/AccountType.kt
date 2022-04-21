@@ -14,10 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thanhnguyen.cinemaclonecompose.ui.model.AccountType
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccent
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorOrange
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorOrangeDark
 import com.thanhnguyen.cinemaclonecompose.ui.theme.custom
-import com.thanhnguyen.cinemaclonecompose.wrapContent
 
 @Composable
 fun AccountType(
@@ -25,7 +23,8 @@ fun AccountType(
 ) {
     Box(
         modifier = Modifier
-            .wrapContent()
+            .wrapContentWidth()
+            .wrapContentHeight()
             .background(
                 color = when (accountType) {
                     AccountType.Premium -> ColorOrangeDark

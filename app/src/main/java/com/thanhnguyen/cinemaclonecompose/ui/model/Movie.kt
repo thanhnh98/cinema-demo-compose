@@ -11,5 +11,6 @@ data class Movie(
     val rating: Double,
     val accountType: AccountType = AccountType.Free,
     val releaseYear: String,
-    val durationMinute: Int
+    val durationMinute: Int,
+    val storyLine: String
 )

@@ -19,8 +19,8 @@ fun getScreenHeight(): Int {
  * @param context Context to get resources and device specific display metrics
  * @return A float value to represent px equivalent to dp depending on device density
  */
-fun convertDpToPixel(dp: Float, context: Context): Float {
-    return dp * (context.resources
+fun Float.dpToPx(context: Context): Float {
+    return this * (context.resources
         .displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
 }
 
@@ -31,7 +31,7 @@ fun convertDpToPixel(dp: Float, context: Context): Float {
  * @param context Context to get resources and device specific display metrics
  * @return A float value to represent dp equivalent to px value
  */
-fun convertPixelsToDp(px: Float, context: Context): Float {
-    return px / (context.resources
+fun Int.pxToDp(context: Context): Float {
+    return this.toFloat() / (context.resources
         .displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
 }

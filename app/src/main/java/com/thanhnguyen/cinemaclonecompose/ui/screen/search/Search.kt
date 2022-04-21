@@ -26,6 +26,7 @@ import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.ToDayMovie
 import com.thanhnguyen.cinemaclonecompose.ui.navigator.Screen
+import com.thanhnguyen.cinemaclonecompose.ui.navigator.navigateToMovieDetailScreen
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import com.thanhnguyen.cinemaclonecompose.utils.toJson
 
@@ -76,11 +77,7 @@ fun RecommendedMovies(nav: NavController) {
         title = "Recommended for you",
         listMovies = listMovieHorizontal
     ){
-        nav.navigate(
-            Screen.Movie.route_detail.replace(
-                "{movie_json_data}", it.toJson()
-            )
-        )
+        nav.navigateToMovieDetailScreen(it)
     }
 }
 

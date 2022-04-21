@@ -22,13 +22,13 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.size
 import com.thanhnguyen.cinemaclonecompose.ui.model.AccountType
 import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
@@ -220,6 +220,7 @@ fun AccountTypeRequire(accountType: AccountType) {
     AccountType(accountType)
 }
 
+@Preview
 @Composable
 fun RatingBox(
     modifier: Modifier = Modifier,
@@ -258,7 +259,7 @@ fun RatingBox(
             Text(
                 text = rating.toString(),
                 style = TextStyle(
-                    color = ColorOrange,
+                    color = ColorOrangeDark,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
                 )

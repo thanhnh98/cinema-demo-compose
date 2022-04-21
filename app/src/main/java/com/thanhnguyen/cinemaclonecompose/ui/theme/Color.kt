@@ -17,12 +17,14 @@ val ColorPrimarySoft = Color(0xFF252836)
 val ColorPrimarySoft79 = Color(0xC9252836)
 val ColorBlueAccent = Color(0xFF12CDD9)
 val ColorBlueAccentBlur50 = Color(0x8012CDD9)
-val ColorBlueAccentBlur20 = Color(0x3312CDD9)
+val ColorBlueAccentBlur10 = Color(0x1A12CDD9)
 val ColorOrange = Color(0xFFFF9800)
 val ColorOrangeDark = Color(0xFFFF8700)
 
 val ColorBackgroundGradientStart = Color(0x1F1D2B)
 val ColorBackgroundGradientStop = Color(0xB51F1D2B)
+
+val ColorPrimaryDark50 = Color(0x801F1D2B)
 
 val Black = Color(0xFF171725)
 val DarkGrey = Color(0xFF696974)

@@ -24,7 +24,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccent
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccentBlur20
+import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccentBlur10
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
 import com.thanhnguyen.cinemaclonecompose.ui.theme.Grey
 import kotlinx.coroutines.launch
@@ -43,7 +43,8 @@ fun BottomNavigation(
     ConstraintLayout(modifier = Modifier
         .fillMaxWidth()
         .padding(
-            16.dp
+            vertical = 14.dp,
+            horizontal = 16.dp
         )
         .wrapContentHeight()
     ){
@@ -138,7 +139,7 @@ fun NavTabView(
     val selectedColor = ColorBlueAccent
     val unSelectedColor = Grey
 
-    val backgroundSelected  = ColorBlueAccentBlur20
+    val backgroundSelected  = ColorBlueAccentBlur10
     val backgroundUnselected  = ColorPrimaryDark
 
     Box(modifier = modifier
@@ -146,7 +147,7 @@ fun NavTabView(
             color = if (isSelected) backgroundSelected else backgroundUnselected,
             shape = RoundedCornerShape(12.dp)
         )
-        .height(32.dp)
+        .height(40.dp)
         .clickable {
             onClick.invoke(tab)
         }
