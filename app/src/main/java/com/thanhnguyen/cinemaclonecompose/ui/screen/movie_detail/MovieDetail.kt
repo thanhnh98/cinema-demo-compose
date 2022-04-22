@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.ramcosta.composedestinations.annotation.Destination
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.getScreenWidth
 import com.thanhnguyen.cinemaclonecompose.pxToDp
@@ -33,6 +34,7 @@ import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 
 @Composable
+@Destination
 fun MovieDetailScreen(nav: NavController, movie: Movie?) {
     val context = LocalContext.current
     val imageWidth = (getScreenWidth().pxToDp(context) * 0.4f).dp

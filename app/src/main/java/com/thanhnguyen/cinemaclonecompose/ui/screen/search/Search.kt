@@ -19,57 +19,54 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.common.highLightMovie
+import com.thanhnguyen.cinemaclonecompose.ui.common.listCategories
 import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.ToDayMovie
 import com.thanhnguyen.cinemaclonecompose.ui.navigator.Screen
 import com.thanhnguyen.cinemaclonecompose.ui.navigator.navigateToMovieDetailScreen
+import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import com.thanhnguyen.cinemaclonecompose.utils.toJson
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchScreen(nav: NavController) {
-    CinemaCloneComposeTheme {
-        Box(
+@Destination
+fun SearchScreen(nav: DestinationsNavigator) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                color = ColorPrimaryDark
+            )
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    color = ColorPrimaryDark
-                )
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                SearchBar()
-                ListChips(listCategories = listOf(
-                    "All",
-                    "Comedy",
-                    "Animation",
-                    "Hentai",
-                    "Document",
-                ))
-                ToDayMovie(
-                    modifier = Modifier.padding(
-                      top = 16.dp
-                    ),
-                    highLightMovie
-                )
-                RecommendedMovies(nav)
-            }
+            SearchBar()
+            ListChips(listCategories)
+            ToDayMovie(
+                modifier = Modifier.padding(
+                    top = 16.dp
+                ),
+                highLightMovie
+            )
+            RecommendedMovies(nav)
         }
     }
 }
 
 
 @Composable
-fun RecommendedMovies(nav: NavController) {
+fun RecommendedMovies(nav: DestinationsNavigator) {
     ListMovieHorizontal(
         modifier = Modifier.padding(
             top = 32.dp,
@@ -77,7 +74,11 @@ fun RecommendedMovies(nav: NavController) {
         title = "Recommended for you",
         listMovies = listMovieHorizontal
     ){
-        nav.navigateToMovieDetailScreen(it)
+        nav.navigate(
+            MovieDetailScreenDestination(
+                it
+            )
+        )
     }
 }
 

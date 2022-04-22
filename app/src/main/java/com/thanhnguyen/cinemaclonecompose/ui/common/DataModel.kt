@@ -113,3 +113,11 @@ val highLightMovie =
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."
     )
+
+val listCategories = listOf(
+    "All",
+    "Comedy",
+    "Animation",
+    "Hentai",
+    "Document",
+)

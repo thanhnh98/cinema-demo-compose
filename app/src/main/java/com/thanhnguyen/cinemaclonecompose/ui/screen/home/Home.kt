@@ -7,10 +7,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,43 +32,69 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.common.listBannersData
+import com.thanhnguyen.cinemaclonecompose.ui.common.listCategories
 import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
 import com.thanhnguyen.cinemaclonecompose.ui.navigator.Screen
 import com.thanhnguyen.cinemaclonecompose.ui.navigator.navigateToMovieDetailScreen
+import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.utils.WTF
 import com.thanhnguyen.cinemaclonecompose.utils.toJson
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
-fun HomeScreen(nav: NavController){
-    CinemaCloneComposeTheme {
-        Box(modifier = Modifier
-            .background(color = ColorPrimaryDark)){
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                Greeting()
-                SearchBar()
-                Banners()
-                ListCategories()
-                MostPopular(nav)
-                Spacer(modifier = Modifier.height(10.dp))
+@Destination
+fun HomeScreen(nav: DestinationsNavigator){
+    val homeViewModel = remember {
+        HomeViewModel()
+    }
+
+    val uiState by homeViewModel.uiState.collectAsState()
+
+    Box(modifier = Modifier
+        .background(color = ColorPrimaryDark)){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            when (uiState){
+                HomeState.Initial -> {
+                    WTF("initialize")
+                }
+                HomeState.Data -> {
+                    WTF("Data")
+                }
+                HomeState.Loading -> {
+                    WTF("Loading")
+                }
+                HomeState.Error -> {
+                    WTF("Err")
+                }
             }
+
+            Greeting()
+            SearchBar()
+            Banners()
+            ListCategories()
+            MostPopular(nav)
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
 
 @Composable
-fun MostPopular(navController: NavController) {
+fun MostPopular(navController: DestinationsNavigator) {
     ListMovieHorizontal(
         modifier = Modifier.padding(
             top = 32.dp,
@@ -80,19 +103,16 @@ fun MostPopular(navController: NavController) {
         title = "Most popular",
         listMovies = listMovieHorizontal
     ){
-        navController.navigateToMovieDetailScreen(it)
+        navController.navigate(
+            MovieDetailScreenDestination(
+                it
+            )
+        )
     }
 }
 
 @Composable
 fun ListCategories() {
-    val listCategories = mutableListOf(
-        "All",
-        "Comedy",
-        "Animation",
-        "Hentai",
-        "Document",
-    )
     Column(
         modifier = Modifier.padding(
             start = 16.dp
