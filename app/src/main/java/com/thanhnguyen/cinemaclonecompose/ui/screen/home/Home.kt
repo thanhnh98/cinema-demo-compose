@@ -14,7 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
@@ -26,7 +25,6 @@ import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -41,22 +39,42 @@ import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
-import com.thanhnguyen.cinemaclonecompose.ui.navigator.Screen
-import com.thanhnguyen.cinemaclonecompose.ui.navigator.navigateToMovieDetailScreen
+import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
+import com.thanhnguyen.cinemaclonecompose.ui.model.User
 import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import com.thanhnguyen.cinemaclonecompose.utils.WTF
-import com.thanhnguyen.cinemaclonecompose.utils.toJson
-import kotlinx.coroutines.flow.collectLatest
+import com.thanhnguyen.cinemaclonecompose.utils.cast
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
 @Destination
-fun HomeScreen(nav: DestinationsNavigator){
-    val homeViewModel = remember {
+fun HomeScreen(
+    nav: DestinationsNavigator
+){
+    val homeViewModel:HomeViewModel by remember {
         HomeViewModel()
+    }
+
+    val profileUserData: MutableState<User?> = remember {
+        mutableStateOf(null)
+    }
+
+    val bannerData: MutableState<List<Banner>?> = remember {
+        mutableStateOf(null)
+    }
+
+    val categoriesData: MutableState<List<String>?> = remember {
+        mutableStateOf(null)
+    }
+
+    val moviesData: MutableState<List<Movie>?> = remember {
+        mutableStateOf(null)
     }
 
     val uiState by homeViewModel.uiState.collectAsState()
@@ -72,39 +90,44 @@ fun HomeScreen(nav: DestinationsNavigator){
                 .verticalScroll(rememberScrollState()),
         ) {
             when (uiState){
-                HomeState.Initial -> {
+                is HomeState.Initial -> {
                     WTF("initialize")
                 }
-                HomeState.Data -> {
-                    WTF("Data")
+                is HomeState.Data -> {
+                    uiState.cast<HomeState.Data>().apply {
+                        profileUserData.value = user
+                        categoriesData.value = listCategories
+                        bannerData.value = banners
+                        moviesData.value = listMovies
+                    }
                 }
-                HomeState.Loading -> {
+                is HomeState.Loading -> {
                     WTF("Loading")
                 }
-                HomeState.Error -> {
+                is HomeState.Error -> {
                     WTF("Err")
                 }
             }
 
-            Greeting()
-            SearchBar()
-            Banners()
-            ListCategories()
-            MostPopular(nav)
+            Greeting(profileUserData.value)
+            SearchBar(uiState)
+            Banners(bannerData.value)
+            ListCategories(categoriesData.value, nav)
+            MostPopular(moviesData.value, nav)
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
 
 @Composable
-fun MostPopular(navController: DestinationsNavigator) {
+fun MostPopular(movies: List<Movie>?, navController: DestinationsNavigator) {
     ListMovieHorizontal(
         modifier = Modifier.padding(
             top = 32.dp,
             start = 16.dp
         ),
         title = "Most popular",
-        listMovies = listMovieHorizontal
+        listMovies = movies?: listOf()
     ){
         navController.navigate(
             MovieDetailScreenDestination(
@@ -115,7 +138,7 @@ fun MostPopular(navController: DestinationsNavigator) {
 }
 
 @Composable
-fun ListCategories() {
+fun ListCategories(categories: List<String>?,  nav: DestinationsNavigator) {
     Column(
         modifier = Modifier.padding(
             start = 16.dp
@@ -129,7 +152,7 @@ fun ListCategories() {
             text = "Categories",
             style = TextStyle().bold()
         )
-        ListChips(listCategories)
+        ListChips(categories?: listOf())
     }
 }
 
@@ -174,10 +197,10 @@ fun ItemCategory(
 @SuppressLint("CoroutineCreationDuringComposition")
 @ExperimentalPagerApi
 @Composable
-fun Banners() {
+fun Banners(banners: List<Banner>?) {
     val composableScope = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    val listBanners = listBannersData
+    val listBanners = banners?: listOf()
 
     Column(
         modifier = Modifier
@@ -223,12 +246,14 @@ fun Banners() {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        DotsIndicator(
-            totalDots = listBanners.size,
-            selectedIndex = pagerState.currentPage % listBanners.size,
-            selectedColor = ColorBlueAccent,
-            unSelectedColor = ColorBlueAccentBlur50
-        )
+        if (listBanners.isNotEmpty()) {
+            DotsIndicator(
+                totalDots = listBanners.size,
+                selectedIndex = pagerState.currentPage % listBanners.size,
+                selectedColor = ColorBlueAccent,
+                unSelectedColor = ColorBlueAccentBlur50
+            )
+        }
     }
     composableScope.launch {
         pagerState.scrollToPage(0)
@@ -338,7 +363,7 @@ fun ItemBanner(banner: Banner){
 }
 
 @Composable
-fun SearchBar() {
+fun SearchBar(uiState: HomeState) {
     val textValue = remember { mutableStateOf(TextFieldValue("")) }
 
     Box(modifier = Modifier
@@ -435,8 +460,15 @@ fun SearchBar() {
 }
 
 @Composable
-fun Greeting() {
-    val image: Painter = painterResource(id = R.drawable.avatar)
+fun Greeting(user: User?) {
+    var name = "Anonymous"
+    var thumb = ""
+
+    if (user != null){
+        name = user.name
+        thumb = user.thumbnail
+    }
+
     ConstraintLayout(
         modifier = Modifier
             .padding(
@@ -449,8 +481,8 @@ fun Greeting() {
     ) {
         val (imgLeft, imgRight, textCenter) = createRefs()
 
-        Image(
-            image,
+        AsyncImage(
+            thumb,
             modifier = Modifier
                 .constrainAs(imgLeft) {
                     start.linkTo(parent.start)
@@ -461,6 +493,7 @@ fun Greeting() {
                 .clip(RoundedCornerShape(20.dp)),
             contentScale = ContentScale.Crop,
             contentDescription = "")
+
         Column(
             modifier = Modifier
                 .constrainAs(textCenter){
@@ -473,12 +506,12 @@ fun Greeting() {
             horizontalAlignment = Alignment.Start
 
         ) {
-            Text(text = "Hello, Thanh Nguyen!", style = TextStyle(
+            Text(text = "Hello, ${name}!", style = TextStyle(
                 color = TextColor.White,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
-            )
-            )
+            ))
+
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = "Let's stream your favourite movie", style = TextStyle(
                 color = TextColor.Grey,

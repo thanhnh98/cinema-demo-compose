@@ -3,6 +3,12 @@ package com.thanhnguyen.cinemaclonecompose.ui.common
 import com.thanhnguyen.cinemaclonecompose.ui.model.AccountType
 import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
 import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
+import com.thanhnguyen.cinemaclonecompose.ui.model.User
+
+val globalUser = User(
+    "Thanh Nguyen",
+    thumbnail = "https://gamek.mediacdn.vn/zoom/700_438/2018/5/18/photo-1-1479798457552-crop-15266148618271925059814.jpg"
+)
 
 val listBannersData = listOf(
     Banner(

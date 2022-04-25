@@ -1,9 +1,11 @@
 package com.thanhnguyen.cinemaclonecompose.ui.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -13,7 +15,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -23,10 +27,8 @@ import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccent
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccentBlur10
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
-import com.thanhnguyen.cinemaclonecompose.ui.theme.Grey
+import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.utils.WTF
 import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
@@ -139,7 +141,7 @@ fun NavTabView(
     val selectedColor = ColorBlueAccent
     val unSelectedColor = Grey
 
-    val backgroundSelected  = ColorBlueAccentBlur10
+    val backgroundSelected  = ColorPrimarySoft
     val backgroundUnselected  = ColorPrimaryDark
 
     Box(modifier = modifier
@@ -148,6 +150,7 @@ fun NavTabView(
             shape = RoundedCornerShape(12.dp)
         )
         .height(40.dp)
+        .focusable(true)
         .clickable {
             onClick.invoke(tab)
         }
@@ -175,9 +178,11 @@ fun NavTabView(
                     .width(20.dp)
                     .height(20.dp)
             )
-            if (isSelected) {
-                Spacer(modifier = Modifier.width(4.dp))
+            AnimatedVisibility(visible = isSelected) {
                 Text(
+                    modifier = Modifier.padding(
+                        start = 4.dp
+                    ),
                     text = tab.name,
                     style = TextStyle(
                         fontSize = 14.sp,
