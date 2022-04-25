@@ -41,6 +41,9 @@ fun SearchScreen(nav: DestinationsNavigator) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .padding(
+                top = 16.dp
+            )
             .background(
                 color = ColorPrimaryDark
             )

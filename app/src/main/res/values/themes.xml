@@ -2,5 +2,11 @@
 <resources>
 
     <style name="Theme.CinemaCloneCompose" parent="android:Theme.Material.Light.NoActionBar" >
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

@@ -2,8 +2,6 @@ package com.thanhnguyen.cinemaclonecompose.ui.screen.movie_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,8 +35,8 @@ import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 @Destination
 fun MovieDetailScreen(nav: NavController, movie: Movie?) {
     val context = LocalContext.current
-    val imageWidth = (getScreenWidth().pxToDp(context) * 0.4f).dp
-    val imageHeight = imageWidth * 1.5f
+    val imageWidth = (getScreenWidth().pxToDp(context) * 0.5f).dp
+    val imageHeight = imageWidth * 1.7f
     Box(
         modifier = Modifier
             .background(color = ColorPrimaryDark)
@@ -114,7 +112,7 @@ fun MovieDetailScreen(nav: NavController, movie: Movie?) {
         ActionBar(
             modifier = Modifier
                 .padding(
-                    top = 16.dp
+                    top = 32.dp
                 ),
             title = movie?.name?:"null",
             iconBack = painterResource(id = R.drawable.ic_round_left_32),

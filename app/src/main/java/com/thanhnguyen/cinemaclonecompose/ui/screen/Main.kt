@@ -24,7 +24,9 @@ import com.thanhnguyen.cinemaclonecompose.utils.WTF
 
 @ExperimentalMaterial3Api
 @ExperimentalPagerApi
-@Destination(start = true)
+@Destination(
+    start = true
+)
 @Composable
 fun MainScreen(nav: DestinationsNavigator) {
     Surface(
@@ -47,7 +49,6 @@ fun MainScreen(nav: DestinationsNavigator) {
                 state = pagerState,
                 userScrollEnabled = false
             ) { pos ->
-                WTF("pos: $pos")
                 when(pos){
                     0 -> HomeScreen(nav)
                     1 -> SearchScreen(nav)

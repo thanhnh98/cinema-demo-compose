@@ -65,6 +65,9 @@ fun HomeScreen(nav: DestinationsNavigator){
         .background(color = ColorPrimaryDark)){
         Column(
             modifier = Modifier
+                .padding(
+                    top = 32.dp
+                )
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         ) {
