@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.components
+package com.thanhnguyen.cinemaclonecompose.common.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
@@ -13,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -27,9 +27,11 @@ import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.ui.theme.*
-import com.thanhnguyen.cinemaclonecompose.utils.WTF
+import com.thanhnguyen.cinemaclonecompose.theme.*
+import com.thanhnguyen.cinemaclonecompose.utils.fromJson
+import com.thanhnguyen.cinemaclonecompose.utils.toJson
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 @ExperimentalPagerApi
 @Composable
@@ -38,8 +40,8 @@ fun BottomNavigation(
 ){
     val coroutineScope = rememberCoroutineScope()
 
-    val tabSelected = remember {
-        mutableStateOf(NavTab.HOME)
+    val tabSelected = rememberSaveable(stateSaver = BottomNavigationState.Saver) {
+        mutableStateOf(BottomNavigationState(NavTab.HOME))
     }
 
     ConstraintLayout(modifier = Modifier
@@ -65,10 +67,10 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.type == NavTab.HOME.type,
+            isSelected = tabSelected.value.tabSelected.type == NavTab.HOME.type,
             NavTab.HOME
         ){
-            tabSelected.value = it
+            tabSelected.value = BottomNavigationState(it)
             coroutineScope.launch {
                 pagerState.animateScrollToPage(0)
             }
@@ -83,10 +85,10 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.type == NavTab.SEARCH.type,
+            isSelected = tabSelected.value.tabSelected.type == NavTab.SEARCH.type,
             NavTab.SEARCH
         ){
-            tabSelected.value = it
+            tabSelected.value = BottomNavigationState(it)
             coroutineScope.launch {
                 pagerState.animateScrollToPage(1)
             }
@@ -101,10 +103,10 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.type == NavTab.DOWNLOAD.type,
+            isSelected = tabSelected.value.tabSelected.type == NavTab.DOWNLOAD.type,
             NavTab.DOWNLOAD
         ){
-            tabSelected.value = it
+            tabSelected.value = BottomNavigationState(it)
             coroutineScope.launch {
                 pagerState.animateScrollToPage(2)
             }
@@ -119,10 +121,10 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.type == NavTab.PROFILE.type,
+            isSelected = tabSelected.value.tabSelected.type == NavTab.PROFILE.type,
             NavTab.PROFILE
         ){
-            tabSelected.value = it
+            tabSelected.value = BottomNavigationState(it)
             coroutineScope.launch {
                 pagerState.animateScrollToPage(3)
             }
@@ -202,6 +204,7 @@ enum class TabType {
     PROFILE
 }
 
+@Serializable
 data class NavTab(
     val type: TabType,
     val name: String,
@@ -228,5 +231,25 @@ data class NavTab(
             "Profile",
             R.drawable.ic_profile
         )
+    }
+}
+
+data class BottomNavigationState(
+    val tabSelected: NavTab
+){
+    companion object {
+        val Saver = run {
+            val tabSelectedKey = "tab"
+            mapSaver(
+                save = {
+                    mapOf(
+                        tabSelectedKey to (it.tabSelected).toJson()
+                    )
+                },
+                restore = {
+                    BottomNavigationState((it[tabSelectedKey] as String).fromJson())
+                }
+            )
+        }
     }
 }

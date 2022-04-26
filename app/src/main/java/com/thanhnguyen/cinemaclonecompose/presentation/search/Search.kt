@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.screen.search
+package com.thanhnguyen.cinemaclonecompose.presentation.search
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -18,26 +18,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.ui.common.highLightMovie
-import com.thanhnguyen.cinemaclonecompose.ui.common.listCategories
-import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
-import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
-import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
-import com.thanhnguyen.cinemaclonecompose.ui.components.ToDayMovie
-import com.thanhnguyen.cinemaclonecompose.ui.navigator.Screen
-import com.thanhnguyen.cinemaclonecompose.ui.navigator.navigateToMovieDetailScreen
-import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
-import com.thanhnguyen.cinemaclonecompose.ui.theme.*
-import com.thanhnguyen.cinemaclonecompose.utils.toJson
+import com.thanhnguyen.cinemaclonecompose.common.highLightMovie
+import com.thanhnguyen.cinemaclonecompose.common.listCategories
+import com.thanhnguyen.cinemaclonecompose.common.listMovieHorizontal
+import com.thanhnguyen.cinemaclonecompose.common.components.ListChips
+import com.thanhnguyen.cinemaclonecompose.common.components.ListMovieHorizontal
+import com.thanhnguyen.cinemaclonecompose.common.components.ToDayMovie
+import com.thanhnguyen.cinemaclonecompose.presentation.destinations.MovieDetailScreenDestination
+import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimaryDark
+import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimarySoft
+import com.thanhnguyen.cinemaclonecompose.theme.Grey
+import com.thanhnguyen.cinemaclonecompose.theme.TextColor
 
 @ExperimentalMaterial3Api
 @Composable
 @Destination
-fun SearchScreen(nav: DestinationsNavigator) {
+fun SearchScreen(
+    nav: DestinationsNavigator
+) {
+    val listChips = listOf(
+        "All",
+        "Comedy",
+        "Animation",
+        "Hentai",
+        "Document",
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,7 +64,7 @@ fun SearchScreen(nav: DestinationsNavigator) {
                 .verticalScroll(rememberScrollState()),
         ) {
             SearchBar()
-            ListChips(listCategories)
+            ListChips(listChips)
             ToDayMovie(
                 modifier = Modifier.padding(
                     top = 16.dp

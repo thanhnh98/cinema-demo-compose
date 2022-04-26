@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.screen.movie_detail
+package com.thanhnguyen.cinemaclonecompose.presentation.movie_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,10 +26,10 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.getScreenWidth
 import com.thanhnguyen.cinemaclonecompose.pxToDp
-import com.thanhnguyen.cinemaclonecompose.ui.components.ActionBar
-import com.thanhnguyen.cinemaclonecompose.ui.components.RatingBox
-import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
-import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.common.components.ActionBar
+import com.thanhnguyen.cinemaclonecompose.common.components.RatingBox
+import com.thanhnguyen.cinemaclonecompose.model.Movie
+import com.thanhnguyen.cinemaclonecompose.theme.*
 
 @Composable
 @Destination
@@ -118,7 +118,7 @@ fun MovieDetailScreen(nav: NavController, movie: Movie?) {
             iconBack = painterResource(id = R.drawable.ic_round_left_32),
             iconRight = painterResource(id = R.drawable.ic_heart),
             onBackPressed = {
-                nav.popBackStack()
+                nav.navigateUp()
             }
         )
     }

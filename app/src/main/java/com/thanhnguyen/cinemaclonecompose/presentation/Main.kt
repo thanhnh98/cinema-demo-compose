@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.screen
+package com.thanhnguyen.cinemaclonecompose.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,11 +16,10 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.thanhnguyen.cinemaclonecompose.ui.components.BottomNavigation
-import com.thanhnguyen.cinemaclonecompose.ui.screen.home.HomeScreen
-import com.thanhnguyen.cinemaclonecompose.ui.screen.search.SearchScreen
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
-import com.thanhnguyen.cinemaclonecompose.utils.WTF
+import com.thanhnguyen.cinemaclonecompose.common.components.BottomNavigation
+import com.thanhnguyen.cinemaclonecompose.presentation.home.HomeScreen
+import com.thanhnguyen.cinemaclonecompose.presentation.search.SearchScreen
+import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimaryDark
 
 @ExperimentalMaterial3Api
 @ExperimentalPagerApi

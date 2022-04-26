@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.components
+package com.thanhnguyen.cinemaclonecompose.common.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.thanhnguyen.cinemaclonecompose.ui.model.AccountType
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccent
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorOrangeDark
-import com.thanhnguyen.cinemaclonecompose.ui.theme.custom
+import com.thanhnguyen.cinemaclonecompose.model.AccountType
+import com.thanhnguyen.cinemaclonecompose.theme.ColorBlueAccent
+import com.thanhnguyen.cinemaclonecompose.theme.ColorOrangeDark
+import com.thanhnguyen.cinemaclonecompose.theme.custom
 
 @Composable
 fun AccountType(

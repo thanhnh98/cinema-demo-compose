@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.components
+package com.thanhnguyen.cinemaclonecompose.common.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -29,9 +29,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.ui.model.AccountType
-import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
-import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.model.AccountType
+import com.thanhnguyen.cinemaclonecompose.model.Movie
+import com.thanhnguyen.cinemaclonecompose.theme.*
 
 @ExperimentalMaterial3Api
 @Composable

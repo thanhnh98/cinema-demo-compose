@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.components
+package com.thanhnguyen.cinemaclonecompose.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,14 +14,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimarySoft79
-import com.thanhnguyen.cinemaclonecompose.ui.theme.bold
-import com.thanhnguyen.cinemaclonecompose.ui.theme.normal
+import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimarySoft79
+import com.thanhnguyen.cinemaclonecompose.theme.bold
 
 @Composable
 fun ActionBar(

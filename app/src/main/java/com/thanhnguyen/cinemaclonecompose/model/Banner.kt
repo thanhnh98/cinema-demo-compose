@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.model
+package com.thanhnguyen.cinemaclonecompose.model
 
 data class Banner(
     val thumbnail: String,

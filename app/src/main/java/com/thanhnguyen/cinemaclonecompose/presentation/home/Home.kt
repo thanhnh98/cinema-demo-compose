@@ -1,9 +1,12 @@
-package com.thanhnguyen.cinemaclonecompose.ui.screen.home
+package com.thanhnguyen.cinemaclonecompose.presentation.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -25,6 +28,7 @@ import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -33,88 +37,50 @@ import com.google.accompanist.pager.rememberPagerState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.ui.common.listBannersData
-import com.thanhnguyen.cinemaclonecompose.ui.common.listCategories
-import com.thanhnguyen.cinemaclonecompose.ui.common.listMovieHorizontal
-import com.thanhnguyen.cinemaclonecompose.ui.components.ListChips
-import com.thanhnguyen.cinemaclonecompose.ui.components.ListMovieHorizontal
-import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
-import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
-import com.thanhnguyen.cinemaclonecompose.ui.model.User
-import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
-import com.thanhnguyen.cinemaclonecompose.ui.theme.*
-import com.thanhnguyen.cinemaclonecompose.utils.WTF
-import com.thanhnguyen.cinemaclonecompose.utils.cast
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.thanhnguyen.cinemaclonecompose.common.components.ListChips
+import com.thanhnguyen.cinemaclonecompose.common.components.ListMovieHorizontal
+import com.thanhnguyen.cinemaclonecompose.model.Banner
+import com.thanhnguyen.cinemaclonecompose.model.Movie
+import com.thanhnguyen.cinemaclonecompose.model.User
+import com.thanhnguyen.cinemaclonecompose.presentation.destinations.MovieDetailScreenDestination
+import com.thanhnguyen.cinemaclonecompose.theme.*
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
 @Destination
+@Stable
 fun HomeScreen(
-    nav: DestinationsNavigator
+    nav: DestinationsNavigator,
+    homeViewModel: HomeViewModel = hiltViewModel()
 ){
-    val homeViewModel:HomeViewModel by remember {
-        HomeViewModel()
-    }
+    HomeScreenContent(nav, homeViewModel.uiState.collectAsState())
+}
 
-    val profileUserData: MutableState<User?> = remember {
-        mutableStateOf(null)
-    }
-
-    val bannerData: MutableState<List<Banner>?> = remember {
-        mutableStateOf(null)
-    }
-
-    val categoriesData: MutableState<List<String>?> = remember {
-        mutableStateOf(null)
-    }
-
-    val moviesData: MutableState<List<Movie>?> = remember {
-        mutableStateOf(null)
-    }
-
-    val uiState by homeViewModel.uiState.collectAsState()
-
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun HomeScreenContent(nav: DestinationsNavigator, uiState: State<HomeState>) {
     Box(modifier = Modifier
-        .background(color = ColorPrimaryDark)){
-        Column(
+        .background(color = ColorPrimaryDark)
+    ){
+        LazyColumn(
             modifier = Modifier
                 .padding(
                     top = 32.dp
                 )
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize(),
+            userScrollEnabled = true,
+            state = rememberLazyListState()
         ) {
-            when (uiState){
-                is HomeState.Initial -> {
-                    WTF("initialize")
-                }
-                is HomeState.Data -> {
-                    uiState.cast<HomeState.Data>().apply {
-                        profileUserData.value = user
-                        categoriesData.value = listCategories
-                        bannerData.value = banners
-                        moviesData.value = listMovies
-                    }
-                }
-                is HomeState.Loading -> {
-                    WTF("Loading")
-                }
-                is HomeState.Error -> {
-                    WTF("Err")
-                }
+            item {
+                Greeting(uiState.value.user)
+                SearchBar()
+                Banners(uiState.value.banners)
+                ListCategories(uiState.value.listCategories, nav)
+                MostPopular(uiState.value.listMovies, nav)
+                Spacer(modifier = Modifier.height(10.dp))
             }
-
-            Greeting(profileUserData.value)
-            SearchBar(uiState)
-            Banners(bannerData.value)
-            ListCategories(categoriesData.value, nav)
-            MostPopular(moviesData.value, nav)
-            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
@@ -212,7 +178,8 @@ fun Banners(banners: List<Banner>?) {
             count = listBanners.size,
             contentPadding = PaddingValues(start = 40.dp, end = 40.dp),
             modifier = Modifier.padding(top = 16.dp),
-            state = pagerState
+            state = pagerState,
+            userScrollEnabled = true,
         ) { page ->
             Box(
                 Modifier
@@ -254,9 +221,6 @@ fun Banners(banners: List<Banner>?) {
                 unSelectedColor = ColorBlueAccentBlur50
             )
         }
-    }
-    composableScope.launch {
-        pagerState.scrollToPage(0)
     }
 }
 
@@ -363,7 +327,7 @@ fun ItemBanner(banner: Banner){
 }
 
 @Composable
-fun SearchBar(uiState: HomeState) {
+fun SearchBar() {
     val textValue = remember { mutableStateOf(TextFieldValue("")) }
 
     Box(modifier = Modifier

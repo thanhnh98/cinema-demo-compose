@@ -1,9 +1,9 @@
-package com.thanhnguyen.cinemaclonecompose.ui.common
+package com.thanhnguyen.cinemaclonecompose.common
 
-import com.thanhnguyen.cinemaclonecompose.ui.model.AccountType
-import com.thanhnguyen.cinemaclonecompose.ui.model.Banner
-import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
-import com.thanhnguyen.cinemaclonecompose.ui.model.User
+import com.thanhnguyen.cinemaclonecompose.model.AccountType
+import com.thanhnguyen.cinemaclonecompose.model.Banner
+import com.thanhnguyen.cinemaclonecompose.model.Movie
+import com.thanhnguyen.cinemaclonecompose.model.User
 
 val globalUser = User(
     "Thanh Nguyen",

@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.ui.components
+package com.thanhnguyen.cinemaclonecompose.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,15 +16,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
-import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.theme.*
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.ui.model.Movie
+import com.thanhnguyen.cinemaclonecompose.model.Movie
 
 @Composable
 fun ListMovieHorizontal(
