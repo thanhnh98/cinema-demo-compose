@@ -24,6 +24,13 @@
             android:theme="@style/Theme.CinemaCloneCompose"
             android:fitsSystemWindows="true"
             >
+
+        </activity>
+
+        <activity android:name=".presentation.welcome.WelcomeActivity"
+            android:theme="@style/Theme.CinemaCloneCompose"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

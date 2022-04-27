@@ -40,16 +40,14 @@ class HomeViewModel @Inject constructor(): BaseViewModel<HomeState, HomeEvent>()
 
     fun loadData(){
         viewModelScope.launch {
-            doOnDelay(1000L){
-                call(
-                    HomeEvent.Success(
-                        globalUser,
-                        listBannersData,
-                        listCategories,
-                        listMovieHorizontal
-                    )
+            call(
+                HomeEvent.Success(
+                    globalUser,
+                    listBannersData,
+                    listCategories,
+                    listMovieHorizontal
                 )
-            }
+            )
         }
     }
 

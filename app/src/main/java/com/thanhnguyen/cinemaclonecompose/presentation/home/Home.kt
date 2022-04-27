@@ -1,6 +1,9 @@
 package com.thanhnguyen.cinemaclonecompose.presentation.home
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -116,7 +119,7 @@ fun ListCategories(categories: List<String>?,  nav: DestinationsNavigator) {
                 bottom = 16.dp,
             ),
             text = "Categories",
-            style = TextStyle().bold()
+            style = CommonStyle.bold()
         )
         ListChips(categories?: listOf())
     }
@@ -226,37 +229,31 @@ fun Banners(banners: List<Banner>?) {
 
 @Composable
 fun DotsIndicator(
+    modifier: Modifier = Modifier,
     totalDots : Int,
-    selectedIndex : Int,
-    selectedColor: Color,
-    unSelectedColor: Color,
+    selectedIndex : Int = 0,
+    selectedColor: Color = ColorBlueAccent,
+    unSelectedColor: Color = ColorBlueAccentBlur50,
 ){
-
     LazyRow(
-        modifier = Modifier
+        modifier = modifier
             .wrapContentWidth()
             .wrapContentHeight()
 
     ) {
         items(totalDots) { index ->
-            if (index == selectedIndex) {
-                Box(
-                    modifier = Modifier
-                        .width(24.dp)
-                        .height(8.dp)
-                        .background(
-                            color = selectedColor,
-                            shape = RoundedCornerShape(4f.dp)
-                        )
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .clip(CircleShape)
-                        .background(unSelectedColor)
-                )
-            }
+            Box(
+                modifier = Modifier
+                    .width(if(index == selectedIndex) 24.dp else  8.dp)
+                    .height(8.dp)
+                    .animateContentSize(
+                        animationSpec = tween(durationMillis = 300, easing = LinearOutSlowInEasing)
+                    )
+                    .background(
+                        color = if(index == selectedIndex) selectedColor else unSelectedColor,
+                        shape = RoundedCornerShape(8f.dp)
+                    )
+            )
 
             if (index != totalDots - 1) {
                 Spacer(modifier = Modifier.padding(horizontal = 2.dp))
@@ -312,14 +309,14 @@ fun ItemBanner(banner: Banner){
         ) {
             Text(
                 banner.title,
-                style = TextStyle().bold()
+                style = CommonStyle.bold()
             )
 
             Spacer(modifier = Modifier.height(6.dp))
 
             Text(
                 text = banner.content,
-                style = TextStyle().normal()
+                style = CommonStyle.normal()
             )
         }
 

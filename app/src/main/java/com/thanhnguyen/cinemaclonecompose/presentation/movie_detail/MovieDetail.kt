@@ -135,11 +135,11 @@ fun StoryLine(
         ),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(text = "Story Line", style = TextStyle().bold())
+        Text(text = "Story Line", style = CommonStyle.bold())
         Spacer(modifier = Modifier.padding(
             top = 10.dp
         ))
-        Text(text = movie.storyLine, style = TextStyle().normal())
+        Text(text = movie.storyLine, style = CommonStyle.normal())
     }
 }
 
@@ -234,7 +234,7 @@ fun PlayButton(
                     horizontal = 8.dp
                 ),
                 text = "Play",
-                style = TextStyle().normal()
+                style = CommonStyle.normal()
             )
         }
     }
@@ -265,7 +265,7 @@ fun ExtraInfo(movie: Movie) {
             )
             Text(
                 text = movie.releaseYear,
-                style = TextStyle().custom(
+                style = CommonStyle.custom(
                     fontSize = 12.sp,
                     color = Grey
                 ),
@@ -297,7 +297,7 @@ fun ExtraInfo(movie: Movie) {
             )
             Text(
                 text = "${movie.durationMinute} Minutes",
-                style = TextStyle().custom(
+                style = CommonStyle.custom(
                     fontSize = 12.sp,
                     color = Grey
                 ),
@@ -328,7 +328,7 @@ fun ExtraInfo(movie: Movie) {
             )
             Text(
                 text = movie.type,
-                style = TextStyle().custom(
+                style = CommonStyle.custom(
                     fontSize = 12.sp,
                     color = Grey
                 ),

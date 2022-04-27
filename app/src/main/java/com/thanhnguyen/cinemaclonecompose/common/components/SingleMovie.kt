@@ -48,7 +48,7 @@ fun ToDayMovie(
 
         Text(
             text = "Today",
-            style = TextStyle().bold(),
+            style = CommonStyle.bold(),
             modifier = Modifier
                 .wrapContentWidth()
                 .constrainAs(title) {
@@ -114,7 +114,7 @@ fun ReleaseYear(year: String) {
         )
         Text(
             text = year,
-            style = TextStyle().custom(
+            style = CommonStyle.custom(
                 fontSize = 12.sp,
                 color = Grey
             ),
@@ -166,7 +166,7 @@ fun MovieDuration(durationMinute: Int) {
         )
         Text(
             text = "$durationMinute Minutes",
-            style = TextStyle().custom(
+            style = CommonStyle.custom(
                 fontSize = 12.sp,
                 color = Grey
             ),
@@ -187,7 +187,7 @@ fun MovieDuration(durationMinute: Int) {
         ){
             Text(
                 text = "PG-13",
-                style = TextStyle().custom(
+                style = CommonStyle.custom(
                     fontSize = 12.sp,
                     color = ColorBlueAccent
                 ),
@@ -206,7 +206,7 @@ fun MovieDuration(durationMinute: Int) {
 fun MovieName(name: String) {
     Text(
         text = name,
-        style = TextStyle().custom(
+        style = CommonStyle.custom(
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         ),

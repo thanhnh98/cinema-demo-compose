@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimarySoft79
-import com.thanhnguyen.cinemaclonecompose.theme.bold
+import com.thanhnguyen.cinemaclonecompose.theme.CommonStyle
 
 @Composable
 fun ActionBar(
@@ -120,7 +120,7 @@ fun ActionBar(
                         width = Dimension.fillToConstraints
                     },
                 text = title,
-                style = TextStyle().bold(),
+                style = CommonStyle.bold(),
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center
             )

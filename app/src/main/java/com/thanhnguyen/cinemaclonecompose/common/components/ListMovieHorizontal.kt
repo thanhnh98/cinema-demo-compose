@@ -43,14 +43,14 @@ fun ListMovieHorizontal(
                     .wrapContentWidth(
                         Alignment.Start
                     ),
-                text = title, style = TextStyle().bold())
+                text = title, style = CommonStyle.bold())
 
             Text(modifier = Modifier
                 .weight(1f)
                 .wrapContentWidth(
                     Alignment.End
                 ),
-                text = "See All", style = TextStyle().custom(
+                text = "See All", style = CommonStyle.custom(
                 color = ColorBlueAccent
             ))
         }
@@ -101,7 +101,7 @@ fun MovieItemHorizontal(
                         bottom.linkTo(parent.bottom, margin = 12.dp)
                         start.linkTo(parent.start, margin = 12.dp)
                     },
-                style = TextStyle().custom(
+                style = CommonStyle.custom(
                     color = TextColor.Grey
                 )
             )
@@ -115,7 +115,7 @@ fun MovieItemHorizontal(
                         end.linkTo(parent.end)
                         width = Dimension.fillToConstraints
                     },
-                style = TextStyle().bold(),
+                style = CommonStyle.bold(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

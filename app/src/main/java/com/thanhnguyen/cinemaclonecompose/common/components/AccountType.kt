@@ -9,13 +9,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thanhnguyen.cinemaclonecompose.model.AccountType
 import com.thanhnguyen.cinemaclonecompose.theme.ColorBlueAccent
 import com.thanhnguyen.cinemaclonecompose.theme.ColorOrangeDark
-import com.thanhnguyen.cinemaclonecompose.theme.custom
+import com.thanhnguyen.cinemaclonecompose.theme.CommonStyle
 
 @Composable
 fun AccountType(
@@ -45,7 +44,7 @@ fun AccountType(
                 AccountType.Premium -> "Premium"
                 AccountType.Free -> "Free"
             },
-            style = TextStyle().custom(
+            style = CommonStyle.custom(
                 fontSize = 12.sp
             )
         )
