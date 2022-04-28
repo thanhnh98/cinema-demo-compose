@@ -13,4 +13,4 @@ data class Movie(
     val releaseYear: String,
     val durationMinute: Int,
     val storyLine: String
-)
+): BaseModel()

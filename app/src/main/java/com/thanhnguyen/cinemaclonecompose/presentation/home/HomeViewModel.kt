@@ -6,15 +6,18 @@ import com.thanhnguyen.cinemaclonecompose.common.globalUser
 import com.thanhnguyen.cinemaclonecompose.common.listBannersData
 import com.thanhnguyen.cinemaclonecompose.common.listCategories
 import com.thanhnguyen.cinemaclonecompose.common.listMovieHorizontal
+import com.thanhnguyen.cinemaclonecompose.domain.MovieRepository
+import com.thanhnguyen.cinemaclonecompose.model.Result
 import com.thanhnguyen.cinemaclonecompose.utils.WTF
-import com.thanhnguyen.cinemaclonecompose.utils.doOnDelay
+import com.thanhnguyen.cinemaclonecompose.utils.toJson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(): BaseViewModel<HomeState, HomeEvent>() {
-
+class HomeViewModel @Inject constructor(
+    private val movieRepository: MovieRepository
+): BaseViewModel<HomeState, HomeEvent>() {
     init {
         loadData()
     }
@@ -40,14 +43,22 @@ class HomeViewModel @Inject constructor(): BaseViewModel<HomeState, HomeEvent>()
 
     fun loadData(){
         viewModelScope.launch {
-            call(
-                HomeEvent.Success(
-                    globalUser,
-                    listBannersData,
-                    listCategories,
-                    listMovieHorizontal
-                )
-            )
+            movieRepository.getPopularMovies().apply {
+                when(this){
+                    is Result.Success ->{
+                        call(
+                            HomeEvent.Success(
+                                globalUser,
+                                listBannersData,
+                                listCategories,
+                                this.data?.data?: listOf()
+                            )
+                        )
+                    }
+                }
+            }
+
+
         }
     }
 

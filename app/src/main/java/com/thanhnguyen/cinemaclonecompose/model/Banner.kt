@@ -4,4 +4,4 @@ data class Banner(
     val thumbnail: String,
     val title: String,
     val content: String
-)
+): BaseModel()
