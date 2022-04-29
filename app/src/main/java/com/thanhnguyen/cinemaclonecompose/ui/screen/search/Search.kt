@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.presentation.search
+package com.thanhnguyen.cinemaclonecompose.ui.screen.search
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -22,16 +22,15 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.common.highLightMovie
-import com.thanhnguyen.cinemaclonecompose.common.listCategories
 import com.thanhnguyen.cinemaclonecompose.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.common.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.common.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.common.components.ToDayMovie
-import com.thanhnguyen.cinemaclonecompose.presentation.destinations.MovieDetailScreenDestination
-import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimaryDark
-import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimarySoft
-import com.thanhnguyen.cinemaclonecompose.theme.Grey
-import com.thanhnguyen.cinemaclonecompose.theme.TextColor
+import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
+import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
+import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimarySoft
+import com.thanhnguyen.cinemaclonecompose.ui.theme.Grey
+import com.thanhnguyen.cinemaclonecompose.ui.theme.TextColor
 
 @ExperimentalMaterial3Api
 @Composable

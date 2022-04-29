@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.presentation
+package com.thanhnguyen.cinemaclonecompose.ui.screen.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,9 +17,10 @@ import com.google.accompanist.pager.rememberPagerState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.common.components.BottomNavigation
-import com.thanhnguyen.cinemaclonecompose.presentation.home.HomeScreen
-import com.thanhnguyen.cinemaclonecompose.presentation.search.SearchScreen
-import com.thanhnguyen.cinemaclonecompose.theme.ColorPrimaryDark
+import com.thanhnguyen.cinemaclonecompose.ui.screen.home.HomeScreen
+import com.thanhnguyen.cinemaclonecompose.ui.screen.profile.ProfileScreen
+import com.thanhnguyen.cinemaclonecompose.ui.screen.search.SearchScreen
+import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
 
 @ExperimentalMaterial3Api
 @ExperimentalPagerApi
@@ -49,10 +50,10 @@ fun MainScreen(nav: DestinationsNavigator) {
                 userScrollEnabled = false
             ) { pos ->
                 when(pos){
-                    0 -> HomeScreen(nav)
+                    0 -> ProfileScreen(nav)
                     1 -> SearchScreen(nav)
-                    3 -> SearchScreen(nav)
-                    4 -> SearchScreen(nav)
+                    3 -> HomeScreen(nav)
+                    4 -> ProfileScreen(nav)
                 }
             }
 

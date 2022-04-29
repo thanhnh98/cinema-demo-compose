@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.theme
+package com.thanhnguyen.cinemaclonecompose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle

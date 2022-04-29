@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.presentation.movie_detail
+package com.thanhnguyen.cinemaclonecompose.ui.screen.movie_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -29,7 +28,7 @@ import com.thanhnguyen.cinemaclonecompose.pxToDp
 import com.thanhnguyen.cinemaclonecompose.common.components.ActionBar
 import com.thanhnguyen.cinemaclonecompose.common.components.RatingBox
 import com.thanhnguyen.cinemaclonecompose.model.Movie
-import com.thanhnguyen.cinemaclonecompose.theme.*
+import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 
 @Composable
 @Destination

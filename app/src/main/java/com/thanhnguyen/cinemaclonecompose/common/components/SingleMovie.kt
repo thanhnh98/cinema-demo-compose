@@ -31,7 +31,7 @@ import coil.compose.AsyncImage
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.model.AccountType
 import com.thanhnguyen.cinemaclonecompose.model.Movie
-import com.thanhnguyen.cinemaclonecompose.theme.*
+import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 
 @ExperimentalMaterial3Api
 @Composable
@@ -92,7 +92,7 @@ fun ToDayMovie(
                 },
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            AccountTypeRequire(movie.accountType)
+            AccountTypeRequire(movie.getAccountType())
             MovieName(movie.name)
             ReleaseYear(movie.releaseYear)
             MovieDuration(movie.durationMinute)

@@ -7,7 +7,8 @@ import com.thanhnguyen.cinemaclonecompose.model.User
 
 val globalUser = User(
     "Thanh Nguyen",
-    thumbnail = "https://gamek.mediacdn.vn/zoom/700_438/2018/5/18/photo-1-1479798457552-crop-15266148618271925059814.jpg"
+    thumbnail = "https://gamek.mediacdn.vn/zoom/700_438/2018/5/18/photo-1-1479798457552-crop-15266148618271925059814.jpg",
+    email = "h.thanhnguyen@okla.vn"
 )
 
 val listBannersData = listOf(
@@ -45,7 +46,7 @@ val listMovieHorizontal = listOf(
         "One Piece Strong World",
         "Cartoon",
         4.2,
-        AccountType.Free,
+        1,
         "2022",
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."
@@ -56,7 +57,7 @@ val listMovieHorizontal = listOf(
         "One Piece Film GOLD",
         "Cartoon",
         5.0,
-        AccountType.Free,
+        1,
         "2022",
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."
@@ -67,7 +68,7 @@ val listMovieHorizontal = listOf(
         "One Piece Film RED",
         "Cartoon",
         4.7,
-        AccountType.Free,
+        1,
         "2022",
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."
@@ -78,7 +79,7 @@ val listMovieHorizontal = listOf(
         "Onepice chất lượng cao",
         "Cartoon",
         4.8,
-        AccountType.Free,
+        1,
         "2022",
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."
@@ -89,7 +90,7 @@ val listMovieHorizontal = listOf(
         "One Piece Chopper Story",
         "Cartoon",
         4.2,
-        AccountType.Free,
+        1,
         "2022",
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."
@@ -100,7 +101,7 @@ val listMovieHorizontal = listOf(
         "Nami đẹp vãi chưởng",
         "Cartoon",
         4.2,
-        AccountType.Free,
+        1,
         "2022",
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."
@@ -114,7 +115,7 @@ val highLightMovie =
         "One Piece Chopper Story",
         "Cartoon",
         4.2,
-        AccountType.Free,
+        1,
         "2022",
         150,
         storyLine = "Luffy was born in Foosha Village to Monkey D. Dragon and an unknown woman. Dragon left Luffy in the care of his grandfather, Monkey D. Garp, who did many dangerous things to Luffy to make him stronger, like throwing him down a deep ravine, leaving him alone in the wild, and tying him to a balloon."

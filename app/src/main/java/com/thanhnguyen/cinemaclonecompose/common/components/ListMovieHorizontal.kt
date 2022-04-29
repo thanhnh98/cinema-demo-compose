@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
-import com.thanhnguyen.cinemaclonecompose.theme.*
+import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.model.Movie
 

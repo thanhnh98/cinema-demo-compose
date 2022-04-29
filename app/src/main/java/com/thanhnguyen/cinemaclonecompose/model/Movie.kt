@@ -9,8 +9,10 @@ data class Movie(
     val name: String,
     val type: String,
     val rating: Double,
-    val accountType: AccountType = AccountType.Free,
+    val accountType: Int, // free/premium
     val releaseYear: String,
     val durationMinute: Int,
     val storyLine: String
-): BaseModel()
+): BaseModel() {
+    fun getAccountType() = if(accountType == 1) AccountType.Premium else AccountType.Free
+}

@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.presentation.welcome.view_data
+package com.thanhnguyen.cinemaclonecompose.ui.screen.welcome.view_data
 
 import androidx.compose.ui.graphics.painter.Painter
 

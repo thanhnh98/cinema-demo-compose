@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User(
-    val name: String,
-    val thumbnail: String
+    val name: String? = null,
+    val thumbnail: String? = null,
+    val email: String? = null
 ): BaseModel()

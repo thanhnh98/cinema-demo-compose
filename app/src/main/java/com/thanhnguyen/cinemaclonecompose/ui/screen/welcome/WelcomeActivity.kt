@@ -1,4 +1,4 @@
-package com.thanhnguyen.cinemaclonecompose.presentation
+package com.thanhnguyen.cinemaclonecompose.ui.screen.welcome
 
 import android.os.Bundle
 import android.view.WindowManager
@@ -7,15 +7,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.thanhnguyen.cinemaclonecompose.theme.CinemaCloneComposeTheme
-import dagger.hilt.android.AndroidEntryPoint
+import com.thanhnguyen.cinemaclonecompose.ui.screen.welcome.components.WelcomeSlider
+import com.thanhnguyen.cinemaclonecompose.ui.theme.CinemaCloneComposeTheme
 
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @ExperimentalMaterial3Api
-@AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class WelcomeActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -24,7 +22,7 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             CinemaCloneComposeTheme {
-                DestinationsNavHost(navGraph = NavGraphs.root)
+                WelcomeSlider(this)
             }
         }
     }
