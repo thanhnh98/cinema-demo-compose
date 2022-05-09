@@ -32,6 +32,7 @@ val DarkGrey = Color(0xFF696974)
 val Grey = Color(0xFF92929D)
 val WhiteGrey = Color(0xFFf1f1f5)
 val White = Color(0xFFffffff)
+val White20 = Color(0x33FFFFFF)
 val LineDark = Color(0xFFeaeaea)
 
 object TextColor {
