@@ -9,9 +9,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -27,10 +25,23 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.utils.WTF
 import com.thanhnguyen.cinemaclonecompose.utils.fromJson
 import com.thanhnguyen.cinemaclonecompose.utils.toJson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+
+val tabs = listOf(
+    NavTab.HOME,
+    NavTab.SEARCH,
+    NavTab.DOWNLOAD,
+    NavTab.PROFILE,
+)
 
 @ExperimentalPagerApi
 @Composable
@@ -39,7 +50,7 @@ fun BottomNavigation(
 ){
     val coroutineScope = rememberCoroutineScope()
 
-    val tabSelected = rememberSaveable(stateSaver = BottomNavigationState.Saver) {
+    val tabSelectedState = rememberSaveable(stateSaver = BottomNavigationState.Saver) {
         mutableStateOf(BottomNavigationState(NavTab.HOME))
     }
 
@@ -66,14 +77,11 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.tabSelected.type == NavTab.HOME.type,
-            NavTab.HOME
-        ){
-            tabSelected.value = BottomNavigationState(it)
-            coroutineScope.launch {
-                pagerState.animateScrollToPage(0)
+            tabs[0],
+            tabSelectedState,
+            ){
+                onTabSelectedByUser(it, tabSelectedState, coroutineScope, pagerState)
             }
-        }
 
         NavTabView(
             modifier = Modifier
@@ -84,13 +92,10 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.tabSelected.type == NavTab.SEARCH.type,
-            NavTab.SEARCH
+            tabs[1],
+            tabSelectedState
         ){
-            tabSelected.value = BottomNavigationState(it)
-            coroutineScope.launch {
-                pagerState.animateScrollToPage(1)
-            }
+            onTabSelectedByUser(it, tabSelectedState, coroutineScope, pagerState)
         }
 
         NavTabView(
@@ -102,13 +107,10 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.tabSelected.type == NavTab.DOWNLOAD.type,
-            NavTab.DOWNLOAD
+            tabs[2],
+            tabSelectedState
         ){
-            tabSelected.value = BottomNavigationState(it)
-            coroutineScope.launch {
-                pagerState.animateScrollToPage(2)
-            }
+            onTabSelectedByUser(it, tabSelectedState, coroutineScope, pagerState)
         }
 
         NavTabView(
@@ -120,25 +122,69 @@ fun BottomNavigation(
                      )
                     width = Dimension.fillToConstraints
                 },
-            isSelected = tabSelected.value.tabSelected.type == NavTab.PROFILE.type,
-            NavTab.PROFILE
+            tabs[3],
+            tabSelectedState
         ){
-            tabSelected.value = BottomNavigationState(it)
-            coroutineScope.launch {
-                pagerState.animateScrollToPage(3)
-            }
+            onTabSelectedByUser(it, tabSelectedState, coroutineScope, pagerState)
         }
+    }
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }
+            .combine(
+                snapshotFlow {
+                    pagerState.isScrollInProgress
+                }
+            ){ currentPage, isScrolling ->
+                if (!isScrolling){
+                    onTabSelectedByScrolling(pagerState, tabSelectedState, currentPage, coroutineScope, false)
+                }
+            }.collect{
+
+            }
+    }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+fun onTabSelectedByUser(
+    tab: NavTab,
+    tabSelected: MutableState<BottomNavigationState>,
+    coroutineScope: CoroutineScope,
+    pagerState: PagerState
+) {
+    tabSelected.value = BottomNavigationState(tab)
+    coroutineScope.launch {
+        pagerState.animateScrollToPage(
+            tabs.indexOf(tab)
+        )
+    }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+fun onTabSelectedByScrolling(
+    pagerState: PagerState,
+    tabSelected: MutableState<BottomNavigationState>,
+    pos: Int,
+    coroutineScope: CoroutineScope,
+    autoscroll: Boolean = true
+) {
+    when(pos){
+        0 -> tabSelected.value = BottomNavigationState(NavTab.HOME)
+        1 -> tabSelected.value = BottomNavigationState(NavTab.SEARCH)
+        2 -> tabSelected.value = BottomNavigationState(NavTab.DOWNLOAD)
+        3 -> tabSelected.value = BottomNavigationState(NavTab.PROFILE)
     }
 }
 
 @Composable
 fun NavTabView(
     modifier: Modifier = Modifier,
-    isSelected: Boolean,
     tab: NavTab,
+    tabSelectedState: MutableState<BottomNavigationState>,
     onClick: (NavTab) -> Unit
 ) {
-
+    val isSelected = tabSelectedState.value.tabSelected.type == tab.type    
+    
     val selectedColor = ColorBlueAccent
     val unSelectedColor = Grey
 

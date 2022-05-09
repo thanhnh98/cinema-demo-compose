@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -47,13 +48,13 @@ fun MainScreen(nav: DestinationsNavigator) {
                     },
                 count = 4,
                 state = pagerState,
-                userScrollEnabled = false
+                userScrollEnabled = true
             ) { pos ->
                 when(pos){
-                    0 -> ProfileScreen(nav)
+                    0 -> HomeScreen(nav)
                     1 -> SearchScreen(nav)
-                    3 -> HomeScreen(nav)
-                    4 -> ProfileScreen(nav)
+                    2 -> Text(text = "Thanh nè")
+                    3 -> ProfileScreen(nav)
                 }
             }
 

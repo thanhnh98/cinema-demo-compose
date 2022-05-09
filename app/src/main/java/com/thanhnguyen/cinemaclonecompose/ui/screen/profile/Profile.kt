@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -25,6 +26,7 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,7 +57,7 @@ fun ProfileScreen(
             style = CommonStyle.bold(),
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .constrainAs(actionBar){
+                .constrainAs(actionBar) {
                     top.linkTo(parent.top)
                     width = Dimension.matchParent
                 }
@@ -71,7 +73,7 @@ fun ProfileScreen(
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxSize()
-                .constrainAs(body){
+                .constrainAs(body) {
                     top.linkTo(actionBar.bottom)
                     bottom.linkTo(parent.bottom)
                     width = Dimension.matchParent
@@ -86,14 +88,42 @@ fun ProfileScreen(
                 GroupAccount()
                 GroupGeneral()
                 GroupMore()
+                LogoutButton()
             }
         }
     }
 }
 
 @Composable
-fun GroupMore() {
+fun LogoutButton() {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(16.dp)
+        .border(
+            width = 1.dp,
+            color = ColorBlueAccent,
+            shape = RoundedCornerShape(32.dp)
+        )
+    ){
+        Text(
+            text = "Log Out",
+            style = CommonStyle.custom(
+                color = ColorBlueAccent,
+                fontWeight = FontWeight.Bold
+            ),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .align(Alignment.Center)
+                .padding(16.dp)
+        )
+    }
+}
 
+@Composable
+fun GroupMore() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
