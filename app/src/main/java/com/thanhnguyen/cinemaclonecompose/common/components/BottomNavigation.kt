@@ -25,21 +25,16 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
-import com.thanhnguyen.cinemaclonecompose.utils.WTF
 import com.thanhnguyen.cinemaclonecompose.utils.fromJson
 import com.thanhnguyen.cinemaclonecompose.utils.toJson
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 val tabs = listOf(
     NavTab.HOME,
     NavTab.SEARCH,
-    NavTab.DOWNLOAD,
+    NavTab.NOTIFICATION,
     NavTab.PROFILE,
 )
 
@@ -131,16 +126,8 @@ fun BottomNavigation(
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }
-            .combine(
-                snapshotFlow {
-                    pagerState.isScrollInProgress
-                }
-            ){ currentPage, isScrolling ->
-                if (!isScrolling){
-                    onTabSelectedByScrolling(pagerState, tabSelectedState, currentPage, coroutineScope, false)
-                }
-            }.collect{
-
+            .collect{ currentPage ->
+                onTabSelectedByScrolling(pagerState, tabSelectedState, currentPage, coroutineScope, false)
             }
     }
 }
@@ -154,7 +141,7 @@ fun onTabSelectedByUser(
 ) {
     tabSelected.value = BottomNavigationState(tab)
     coroutineScope.launch {
-        pagerState.animateScrollToPage(
+        pagerState.scrollToPage(
             tabs.indexOf(tab)
         )
     }
@@ -171,7 +158,7 @@ fun onTabSelectedByScrolling(
     when(pos){
         0 -> tabSelected.value = BottomNavigationState(NavTab.HOME)
         1 -> tabSelected.value = BottomNavigationState(NavTab.SEARCH)
-        2 -> tabSelected.value = BottomNavigationState(NavTab.DOWNLOAD)
+        2 -> tabSelected.value = BottomNavigationState(NavTab.NOTIFICATION)
         3 -> tabSelected.value = BottomNavigationState(NavTab.PROFILE)
     }
 }
@@ -245,7 +232,7 @@ fun NavTabView(
 enum class TabType {
     HOME,
     SEARCH,
-    DOWNLOAD,
+    NOTIFICATION,
     PROFILE
 }
 
@@ -266,10 +253,10 @@ data class NavTab(
             "Search",
             R.drawable.ic_search
         )
-        val DOWNLOAD = NavTab(
-            TabType.DOWNLOAD,
-            "Saved",
-            R.drawable.ic_download
+        val NOTIFICATION = NavTab(
+            TabType.NOTIFICATION,
+            "News",
+            R.drawable.ic_news
         )
         val PROFILE = NavTab(
             TabType.PROFILE,

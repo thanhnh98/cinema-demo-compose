@@ -18,9 +18,11 @@ import com.google.accompanist.pager.rememberPagerState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.common.components.BottomNavigation
+import com.thanhnguyen.cinemaclonecompose.ui.screen.favourite.FavouriteScreen
 import com.thanhnguyen.cinemaclonecompose.ui.screen.home.HomeScreen
 import com.thanhnguyen.cinemaclonecompose.ui.screen.profile.ProfileScreen
 import com.thanhnguyen.cinemaclonecompose.ui.screen.search.SearchScreen
+import com.thanhnguyen.cinemaclonecompose.ui.screen.search_detail.SearchDetailScreen
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
 
 @ExperimentalMaterial3Api
@@ -51,9 +53,9 @@ fun MainScreen(nav: DestinationsNavigator) {
                 userScrollEnabled = true
             ) { pos ->
                 when(pos){
-                    0 -> HomeScreen(nav)
+                    0 -> SearchDetailScreen(nav)
                     1 -> SearchScreen(nav)
-                    2 -> Text(text = "Thanh nè")
+                    2 -> FavouriteScreen(nav)
                     3 -> ProfileScreen(nav)
                 }
             }

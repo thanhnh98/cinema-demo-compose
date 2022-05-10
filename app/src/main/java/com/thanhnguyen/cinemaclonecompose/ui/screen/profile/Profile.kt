@@ -39,6 +39,7 @@ import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.R
+import com.thanhnguyen.cinemaclonecompose.common.components.ActionBar
 import com.thanhnguyen.cinemaclonecompose.common.globalUser
 import com.thanhnguyen.cinemaclonecompose.model.User
 import com.thanhnguyen.cinemaclonecompose.ui.screen.home.Greeting
@@ -52,22 +53,16 @@ fun ProfileScreen(
 ){
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (actionBar, body) = createRefs()
-        Text(
-            text = "Profile",
-            style = CommonStyle.bold(),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .constrainAs(actionBar) {
-                    top.linkTo(parent.top)
-                    width = Dimension.matchParent
-                }
-                .padding(
-                    top = 48.dp,
-                    bottom = 16.dp
-                )
-                .fillMaxWidth()
-        )
 
+        ActionBar(
+            modifier = Modifier.constrainAs(actionBar){
+                top.linkTo(parent.top)
+                width = Dimension.matchParent
+            }.padding(
+                top = 32.dp
+            ),
+            title = "Profile"
+        )
 
         LazyColumn(
             verticalArrangement = Arrangement.Top,

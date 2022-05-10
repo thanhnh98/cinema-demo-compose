@@ -1,5 +1,7 @@
 package com.thanhnguyen.cinemaclonecompose.ui.screen.search
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -96,99 +98,97 @@ fun RecommendedMovies(nav: DestinationsNavigator) {
 @Composable
 fun SearchBar() {
     val textValue = remember { mutableStateOf(TextFieldValue("")) }
-
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(
-            top = 16.dp,
-            bottom = 16.dp
-        )
-        .wrapContentHeight()
-        .background(
-            color = ColorPrimarySoft,
-            shape = RoundedCornerShape(24.dp)
-        )
-        .clickable {
+    AnimatedVisibility(visible = true, enter = fadeIn()) {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .wrapContentHeight()
+            .background(
+                color = ColorPrimarySoft,
+                shape = RoundedCornerShape(24.dp)
+            )
+            .clickable {
 //            nav.navigate(Route.SEARCH)
-        }
-    ) {
-        ConstraintLayout(
-            modifier = Modifier
-                .padding(16.dp)
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .align(Alignment.CenterStart),
-        ) {
-            val (icSearch, edtSearch, vLine, icFilter)  = createRefs()
-
-            Image(
-                painterResource(id = R.drawable.ic_search),
-                contentDescription = "",
-                modifier = Modifier
-                    .constrainAs(icSearch) {
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                    }
-                    .width(20.dp)
-                    .height(20.dp)
-            )
-
-            Box(modifier = Modifier
-                .constrainAs(edtSearch){
-                    start.linkTo(icSearch.end, margin = 8.dp)
-                    top.linkTo(icSearch.top)
-                    bottom.linkTo(icSearch.bottom)
-                    end.linkTo(vLine.start, margin = 4.dp)
-                    width = Dimension.fillToConstraints
-                }
-            ){
-               BasicTextField(
-                   value = textValue.value,
-                   onValueChange = {
-                       textValue.value = it
-                   },
-                   modifier = Modifier
-                       .fillMaxWidth(),
-                   textStyle = TextStyle(
-                       color = TextColor.White,
-                       fontSize = 16.sp
-                   ),
-                   singleLine = true
-               )
-               if (textValue.value.text.isEmpty())
-                Text(text = "Search a movie...", style = TextStyle(
-                    color = TextColor.Grey,
-                    fontSize = 16.sp
-                ),
-                    modifier = Modifier.align(alignment = Alignment.CenterStart))
             }
-
-            Spacer(modifier = Modifier
-                .constrainAs(vLine) {
-                    end.linkTo(icFilter.start, margin = 4.dp)
-                    top.linkTo(icFilter.top)
-                    bottom.linkTo(icFilter.bottom)
-                }
-                .width(1.dp)
-                .height(20.dp)
-                .background(
-                    color = Grey
-                )
-            )
-
-            Image(
-                painterResource(id = R.drawable.ic_filter),
-                contentDescription = "",
+        ) {
+            ConstraintLayout(
                 modifier = Modifier
-                    .constrainAs(icFilter) {
-                        end.linkTo(parent.end)
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
+                    .padding(16.dp)
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .align(Alignment.CenterStart),
+            ) {
+                val (icSearch, edtSearch, vLine, icFilter)  = createRefs()
+
+                Image(
+                    painterResource(id = R.drawable.ic_search),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .constrainAs(icSearch) {
+                            start.linkTo(parent.start)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                        }
+                        .width(20.dp)
+                        .height(20.dp)
+                )
+
+                Box(modifier = Modifier
+                    .constrainAs(edtSearch){
+                        start.linkTo(icSearch.end, margin = 8.dp)
+                        top.linkTo(icSearch.top)
+                        bottom.linkTo(icSearch.bottom)
+                        end.linkTo(vLine.start, margin = 4.dp)
+                        width = Dimension.fillToConstraints
                     }
-                    .width(20.dp)
+                ){
+//               BasicTextField(
+//                   value = textValue.value,
+//                   onValueChange = {
+//                       textValue.value = it
+//                   },
+//                   modifier = Modifier
+//                       .fillMaxWidth(),
+//                   textStyle = TextStyle(
+//                       color = TextColor.White,
+//                       fontSize = 16.sp
+//                   ),
+//                   singleLine = true
+//               )
+//               if (textValue.value.text.isEmpty())
+                    Text(text = "Search a movie...", style = TextStyle(
+                        color = TextColor.Grey,
+                        fontSize = 16.sp
+                    ),
+                        modifier = Modifier.align(alignment = Alignment.CenterStart))
+                }
+
+                Spacer(modifier = Modifier
+                    .constrainAs(vLine) {
+                        end.linkTo(icFilter.start, margin = 4.dp)
+                        top.linkTo(icFilter.top)
+                        bottom.linkTo(icFilter.bottom)
+                    }
+                    .width(1.dp)
                     .height(20.dp)
-            )
+                    .background(
+                        color = Grey
+                    )
+                )
+
+                Image(
+                    painterResource(id = R.drawable.ic_filter),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .constrainAs(icFilter) {
+                            end.linkTo(parent.end)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                        }
+                        .width(20.dp)
+                        .height(20.dp)
+                )
+            }
         }
     }
 }

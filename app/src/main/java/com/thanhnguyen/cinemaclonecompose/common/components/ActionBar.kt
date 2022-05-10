@@ -22,10 +22,11 @@ import com.thanhnguyen.cinemaclonecompose.ui.theme.CommonStyle
 @Composable
 fun ActionBar(
     modifier: Modifier = Modifier,
-    iconBack: Painter,
+    iconBack: Painter? = null,
     iconRight: Painter? = null,
     title: String,
-    onBackPressed: (() -> Unit)? = null
+    onBackPressed: (() -> Unit)? = null,
+    onActionPressed: (() -> Unit)? = null
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -44,33 +45,36 @@ fun ActionBar(
                 .fillMaxHeight()
         ) {
             val (icBack, tvTitle, icRight) = createRefs()
-            Box(
-                modifier = Modifier
-                    .height(32.dp)
-                    .width(32.dp)
-                    .constrainAs(icBack){
-                        linkTo(
-                            top = parent.top,
-                            bottom = parent.bottom,
-                        )
-                        start.linkTo(parent.start)
-                    }
-                    .background(
-                        color = ColorPrimarySoft79,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                    .clickable {
-                        onBackPressed?.invoke()
-                    }
-            ){
-                Image(
+
+            if (iconBack != null) {
+                Box(
                     modifier = Modifier
-                        .align(Alignment.Center)
-                        .width(24.dp)
-                        .height(24.dp),
-                    painter = iconBack,
-                    contentDescription = ""
-                )
+                        .height(32.dp)
+                        .width(32.dp)
+                        .constrainAs(icBack) {
+                            linkTo(
+                                top = parent.top,
+                                bottom = parent.bottom,
+                            )
+                            start.linkTo(parent.start)
+                        }
+                        .background(
+                            color = ColorPrimarySoft79,
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        .clickable {
+                            onBackPressed?.invoke()
+                        }
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .width(24.dp)
+                            .height(24.dp),
+                        painter = iconBack,
+                        contentDescription = ""
+                    )
+                }
             }
 
 
@@ -111,7 +115,7 @@ fun ActionBar(
                         end = 20.dp
                     )
                     .constrainAs(tvTitle) {
-                        start.linkTo(icBack.end)
+                        start.linkTo(if(iconBack != null) icBack.end else parent.start)
                         end.linkTo(if (iconRight != null) icRight.start else parent.end)
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
