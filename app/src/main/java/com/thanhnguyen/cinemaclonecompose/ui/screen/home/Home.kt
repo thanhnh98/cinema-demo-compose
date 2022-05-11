@@ -48,6 +48,7 @@ import com.thanhnguyen.cinemaclonecompose.model.Banner
 import com.thanhnguyen.cinemaclonecompose.model.Movie
 import com.thanhnguyen.cinemaclonecompose.model.User
 import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
+import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.SearchDetailScreenDestination
 import com.thanhnguyen.cinemaclonecompose.ui.theme.*
 import kotlin.math.absoluteValue
 
@@ -81,7 +82,7 @@ fun HomeScreenContent(nav: DestinationsNavigator, homeViewModel: HomeViewModel) 
         ) {
             item {
                 Greeting(uiState.value.user)
-                SearchBar()
+                SearchBar(nav)
                 Banners(uiState.value.banners)
                 ListCategories(uiState.value.listCategories, nav)
                 MostPopular(uiState.value.listMovies, nav)
@@ -341,7 +342,7 @@ fun ItemBanner(banner: Banner){
 }
 
 @Composable
-fun SearchBar() {
+fun SearchBar(nav: DestinationsNavigator) {
     val textValue = remember { mutableStateOf(TextFieldValue("")) }
     AnimatedVisibility(visible = true, enter = fadeIn()) {
         Box(modifier = Modifier
@@ -353,7 +354,7 @@ fun SearchBar() {
                 shape = RoundedCornerShape(24.dp)
             )
             .clickable {
-//            nav.navigate(Route.SEARCH)
+                nav.navigate(SearchDetailScreenDestination())
             }
         ) {
             ConstraintLayout(

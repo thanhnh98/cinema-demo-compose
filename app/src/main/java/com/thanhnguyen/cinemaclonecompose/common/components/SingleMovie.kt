@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -44,7 +46,7 @@ fun ToDayMovie(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        val (title, imgThumb, rating, infoContainer) = createRefs()
+        val (title, movieInfo) = createRefs()
 
         Text(
             text = "Today",
@@ -57,13 +59,38 @@ fun ToDayMovie(
                 }
         )
 
+        SingleMovie(
+            modifier = Modifier.constrainAs(movieInfo){
+                top.linkTo(title.bottom, 10.dp)
+                start.linkTo(parent.start)
+            },
+            movie
+        )
+    }
+}
+
+@Preview
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SingleMovie(
+    modifier: Modifier = Modifier,
+    movie: Movie
+) {
+
+    ConstraintLayout(
+        modifier = modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
+    ) {
+        val (imgThumb, rating, infoContainer) = createRefs()
+
         AsyncImage(
             modifier = Modifier
                 .width(112.dp)
                 .height(148.dp)
                 .constrainAs(imgThumb) {
                     start.linkTo(parent.start)
-                    top.linkTo(title.bottom, 10.dp)
+                    top.linkTo(parent.top, 10.dp)
                 }
                 .clip(RoundedCornerShape(12.dp)),
             contentScale = ContentScale.Crop,
@@ -191,12 +218,14 @@ fun MovieDuration(durationMinute: Int) {
                     fontSize = 12.sp,
                     color = ColorBlueAccent
                 ),
-                modifier = Modifier.background(
-                    color = ColorPrimaryDark
-                ).padding(
-                    vertical = 1.dp,
-                    horizontal = 2.dp
-                )
+                modifier = Modifier
+                    .background(
+                        color = ColorPrimaryDark
+                    )
+                    .padding(
+                        vertical = 1.dp,
+                        horizontal = 2.dp
+                    )
             )
         }
     }
@@ -220,7 +249,6 @@ fun AccountTypeRequire(accountType: AccountType) {
     AccountType(accountType)
 }
 
-@Preview
 @Composable
 fun RatingBox(
     modifier: Modifier = Modifier,

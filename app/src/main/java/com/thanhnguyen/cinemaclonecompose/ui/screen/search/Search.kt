@@ -29,6 +29,7 @@ import com.thanhnguyen.cinemaclonecompose.common.components.ListChips
 import com.thanhnguyen.cinemaclonecompose.common.components.ListMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.common.components.ToDayMovie
 import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
+import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.SearchDetailScreenDestination
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimaryDark
 import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimarySoft
 import com.thanhnguyen.cinemaclonecompose.ui.theme.Grey
@@ -64,7 +65,7 @@ fun SearchScreen(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            SearchBar()
+            SearchBar(nav)
             ListChips(listChips)
             ToDayMovie(
                 modifier = Modifier.padding(
@@ -96,19 +97,19 @@ fun RecommendedMovies(nav: DestinationsNavigator) {
 }
 
 @Composable
-fun SearchBar() {
+fun SearchBar(nav: DestinationsNavigator) {
     val textValue = remember { mutableStateOf(TextFieldValue("")) }
     AnimatedVisibility(visible = true, enter = fadeIn()) {
         Box(modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(top = 16.dp)
             .wrapContentHeight()
             .background(
                 color = ColorPrimarySoft,
                 shape = RoundedCornerShape(24.dp)
             )
             .clickable {
-//            nav.navigate(Route.SEARCH)
+                nav.navigate(SearchDetailScreenDestination())
             }
         ) {
             ConstraintLayout(

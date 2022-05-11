@@ -7,23 +7,29 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -33,10 +39,11 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.R
 import com.thanhnguyen.cinemaclonecompose.common.components.ActionBar
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimarySoft
-import com.thanhnguyen.cinemaclonecompose.ui.theme.CommonStyle
-import com.thanhnguyen.cinemaclonecompose.ui.theme.Grey
-import com.thanhnguyen.cinemaclonecompose.ui.theme.TextColor
+import com.thanhnguyen.cinemaclonecompose.common.components.SingleMovie
+import com.thanhnguyen.cinemaclonecompose.ui.screen.destinations.MovieDetailScreenDestination
+import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.utils.WTF
+import com.thanhnguyen.cinemaclonecompose.utils.toJson
 
 @Destination
 @Composable
@@ -73,6 +80,7 @@ fun SearchDetailScreen(nav: DestinationsNavigator, viewModel: SearchDetailViewMo
                 },
                 viewModel
             )
+
             Box(modifier = Modifier
                 .padding(
                     top = 16.dp,
@@ -94,17 +102,17 @@ fun SearchDetailScreen(nav: DestinationsNavigator, viewModel: SearchDetailViewMo
                     }
 
                     !state.data.isNullOrEmpty() -> {
-                        buildBody(state)
+                        buildBody(viewModel, nav, state)
 
                     }
 
                     state.keyword.isNotEmpty() && state.data.isNullOrEmpty() -> {
                         buildNoResult(state)
                     }
+                }
 
-                    uiState.value.isLoading -> {
-                        buildLoading(uiState.value)
-                    }
+                if (uiState.value.isLoading) {
+                    buildLoading(uiState.value)
                 }
             }
         }
@@ -113,42 +121,110 @@ fun SearchDetailScreen(nav: DestinationsNavigator, viewModel: SearchDetailViewMo
 
 @Composable
 fun buildInitialize(state: SearchDetailState) {
-    Text(
-        "chưa nhập gì cả",
-        style = CommonStyle.normal()
-    )
+    Box(modifier = Modifier.fillMaxSize()){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(48.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Image(painter = painterResource(id = R.drawable.img_no_result), contentDescription = "")
+            Spacer(modifier = Modifier.padding(top = 14.dp))
+            Text(text = "Type any thing which you wanna find...", style = CommonStyle.normal(), textAlign = TextAlign.Center)
+        }
+    }
 }
 
 @Composable
 fun buildLoading(state: SearchDetailState) {
-    Text(
-        "Loading",
-        style = CommonStyle.normal()
-    )
+    Box(modifier =
+    Modifier
+        .fillMaxSize()
+        .background(
+            color = ColorPrimaryDark50
+        )
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun buildBody(state: SearchDetailState) {
-    Text(
-        "Loading",
-        style = CommonStyle.normal()
-    )
+fun buildBody(
+    viewModel: SearchDetailViewModel,
+    nav: DestinationsNavigator,
+    state: SearchDetailState
+) {
+    val data = state.data ?: return
+    val listState = rememberLazyListState()
+
+    LazyColumn(
+        state = listState,
+        userScrollEnabled = true,
+    ){
+        itemsIndexed(data) { index, itemData ->
+            if (index == data.size - 1 && !state.isLoadingMore){
+                viewModel.loadMoreResults(state.keyword)
+            }
+            SingleMovie(
+                movie = itemData,
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .clickable {
+                        nav.navigate(
+                            MovieDetailScreenDestination(movie = itemData)
+                        )
+                    }
+            )
+        }
+    }
 }
 
 @Composable
 fun buildNoResult(state: SearchDetailState) {
-    Text(
-        "No result for: ${state.keyword}",
-        style = CommonStyle.normal()
-    )
+    Box(modifier = Modifier.fillMaxSize()){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(48.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Image(painter = painterResource(id = R.drawable.img_no_result), contentDescription = "")
+            Spacer(modifier = Modifier.padding(top = 14.dp))
+            Text(text = "We are sorry, we can't find the movie :(", style = CommonStyle.bold(), textAlign = TextAlign.Center)
+            Spacer(modifier = Modifier.padding(top = 12.dp))
+            Text(text = "Try another keyword to find more magic movies :>", style = CommonStyle.custom(
+                fontWeight = FontWeight.W300
+            ), textAlign = TextAlign.Center)
+        }
+    }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditableSearchBar(
     modifier: Modifier = Modifier,
     viewModel: SearchDetailViewModel
 ) {
     val textValue = remember { mutableStateOf(TextFieldValue("")) }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+    val focusRequest = FocusRequester()
+
+    LaunchedEffect(Unit){
+        focusRequest.requestFocus()
+    }
+
+    DisposableEffect(Unit){
+        onDispose {
+          keyboardController?.hide()
+        }
+    }
+
     AnimatedVisibility(
         modifier = modifier,
         visible = true, enter = fadeIn()
@@ -203,7 +279,7 @@ fun EditableSearchBar(
                    },
                    modifier = Modifier
                        .fillMaxWidth()
-                       .focusRequester(FocusRequester()),
+                       .focusRequester(focusRequest),
                    textStyle = TextStyle(
                        color = TextColor.White,
                        fontSize = 16.sp
@@ -215,9 +291,11 @@ fun EditableSearchBar(
                    ),
                    keyboardActions = KeyboardActions(
                        onSearch = {
+                           keyboardController?.hide()
+                           focusManager.clearFocus()
                            viewModel.submitTextSearch(textValue.value.text)
                        }
-                   )
+                   ),
                )
                if (textValue.value.text.isEmpty())
                     Text(text = "Search a movie...", style = TextStyle(

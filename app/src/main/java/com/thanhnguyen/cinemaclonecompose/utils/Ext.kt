@@ -20,3 +20,9 @@ suspend fun doOnDelay(
 inline fun <reified T> Any.cast(): T {
     return this as T
 }
+
+fun <T> List<T>.addAll(moreData: List<T>): List<T>{
+    return this.toMutableList().apply {
+        addAll(moreData)
+    }
+}
