@@ -3,11 +3,7 @@
 Using Jetpack Compose for practising UI 
 
 ## Video Demo
-
-<video width="40%" height="240" controls>
-  <source src="./assets/demo.mp4" type="video/mp4">
-</video>
-
+https://youtu.be/PAOtcM_riM4
 
 
 # Full design
