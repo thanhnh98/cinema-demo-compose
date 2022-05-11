@@ -3,7 +3,7 @@
 Using Jetpack Compose for practising UI 
 
 ## Video Demo
-https://www.youtube.com/watch?v=PAOtcM_riM4&t=7s
+https://www.youtube.com/watch?v=PAOtcM_riM4
 
 
 # Full design
