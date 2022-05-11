@@ -2,15 +2,11 @@
 
 Using Jetpack Compose for practising UI 
 
-## 1. Home
-<img width="20%" src="./assets/home.jpg" />
+## Video Demo
 
-
-## 2. Search Main
-<img width="20%" src="./assets/search1.jpg" />
-
-
-Doing...
+<video width="40%" height="240" controls>
+  <source src="./assets/demo.mp4" type="video/mp4">
+</video>
 
 
 
