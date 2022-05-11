@@ -3,7 +3,7 @@
 Using Jetpack Compose for practising UI 
 
 ## Video Demo
-https://www.youtube.com/watch?v=PAOtcM_riM4
+https://raw.githubusercontent.com/thanhnh98/cinema-demo-compose/master/assets/demo.mp4
 
 
 # Full design
