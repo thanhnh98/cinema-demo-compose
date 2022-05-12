@@ -1,5 +1,6 @@
 package com.thanhnguyen.cinemaclonecompose.ui.screen.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -12,6 +13,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.thanhnguyen.cinemaclonecompose.common.listBannersData
 import com.thanhnguyen.cinemaclonecompose.common.listMovieHorizontal
 import com.thanhnguyen.cinemaclonecompose.ui.screen.NavGraphs
+import com.thanhnguyen.cinemaclonecompose.ui.screen.welcome.WelcomeActivity
 import com.thanhnguyen.cinemaclonecompose.ui.theme.CinemaCloneComposeTheme
 import com.thanhnguyen.cinemaclonecompose.utils.WTF
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +29,9 @@ class MainActivity : ComponentActivity() {
 //            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
 //            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 //        )
+        startActivity(
+            Intent(this, WelcomeActivity::class.java)
+        )
         setContent {
             CinemaCloneComposeTheme {
                 DestinationsNavHost(navGraph = NavGraphs.root)
@@ -34,3 +39,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

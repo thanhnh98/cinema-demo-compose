@@ -104,9 +104,7 @@ fun WelcomeSlider(activity: WelcomeActivity) {
                                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
                                 } else {
                                     withContext(Dispatchers.Main) {
-                                        activity.startActivity(
-                                            Intent(activity, MainActivity::class.java)
-                                        )
+                                        activity.finish()
                                     }
                                 }
                             }
