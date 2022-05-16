@@ -24,7 +24,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.thanhnguyen.cinemaclonecompose.R
-import com.thanhnguyen.cinemaclonecompose.ui.theme.*
+import com.thanhnguyen.cinemaclonecompose.app.ui.theme.*
 import com.thanhnguyen.cinemaclonecompose.utils.fromJson
 import com.thanhnguyen.cinemaclonecompose.utils.toJson
 import kotlinx.coroutines.CoroutineScope

@@ -16,8 +16,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorPrimarySoft79
-import com.thanhnguyen.cinemaclonecompose.ui.theme.CommonStyle
+import com.thanhnguyen.cinemaclonecompose.app.ui.theme.ColorPrimarySoft79
+import com.thanhnguyen.cinemaclonecompose.app.ui.theme.CommonStyle
 
 @Composable
 fun ActionBar(

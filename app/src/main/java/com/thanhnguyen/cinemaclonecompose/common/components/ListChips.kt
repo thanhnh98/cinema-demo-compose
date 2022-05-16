@@ -10,7 +10,7 @@ import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.thanhnguyen.cinemaclonecompose.ui.screen.home.ItemCategory
+import com.thanhnguyen.cinemaclonecompose.app.ui.screen.home.ItemCategory
 
 @Composable
 fun ListChips(
