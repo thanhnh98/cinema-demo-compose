@@ -11,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.thanhnguyen.cinemaclonecompose.model.AccountType
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorBlueAccent
-import com.thanhnguyen.cinemaclonecompose.ui.theme.ColorOrangeDark
-import com.thanhnguyen.cinemaclonecompose.ui.theme.CommonStyle
+import com.thanhnguyen.cinemaclonecompose.app.model.AccountType
+import com.thanhnguyen.cinemaclonecompose.app.ui.theme.ColorBlueAccent
+import com.thanhnguyen.cinemaclonecompose.app.ui.theme.ColorOrangeDark
+import com.thanhnguyen.cinemaclonecompose.app.ui.theme.CommonStyle
 
 @Composable
 fun AccountType(

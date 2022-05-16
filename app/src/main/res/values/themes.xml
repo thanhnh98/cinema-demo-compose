@@ -10,4 +10,11 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowBackground">@color/color_primary</item>
     </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/color_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>  # Required for
+        <item name="postSplashScreenTheme">@style/Theme.CinemaCloneCompose</item>  # Required.
+    </style>
 </resources>

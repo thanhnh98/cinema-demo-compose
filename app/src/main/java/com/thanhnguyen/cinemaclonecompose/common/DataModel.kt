@@ -1,9 +1,8 @@
 package com.thanhnguyen.cinemaclonecompose.common
 
-import com.thanhnguyen.cinemaclonecompose.model.AccountType
-import com.thanhnguyen.cinemaclonecompose.model.Banner
-import com.thanhnguyen.cinemaclonecompose.model.Movie
-import com.thanhnguyen.cinemaclonecompose.model.User
+import com.thanhnguyen.cinemaclonecompose.app.model.Banner
+import com.thanhnguyen.cinemaclonecompose.app.model.Movie
+import com.thanhnguyen.cinemaclonecompose.app.model.User
 
 val globalUser = User(
     "Thanh Nguyen",
