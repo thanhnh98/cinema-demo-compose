@@ -19,6 +19,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thanhnguyen.cinemaclonecompose.common.components.BottomNavigation
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.favourite.FavouriteScreen
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.home.HomeScreen
+import com.thanhnguyen.cinemaclonecompose.app.ui.screen.login.LoginScreen
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.profile.ProfileScreen
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.search.SearchScreen
 import com.thanhnguyen.cinemaclonecompose.app.ui.theme.ColorPrimaryDark
@@ -51,7 +52,7 @@ fun MainScreen(nav: DestinationsNavigator) {
                 userScrollEnabled = true
             ) { pos ->
                 when(pos){
-                    0 -> HomeScreen(nav)
+                    0 -> LoginScreen()
                     1 -> SearchScreen(nav)
                     2 -> FavouriteScreen(nav)
                     3 -> ProfileScreen(nav)

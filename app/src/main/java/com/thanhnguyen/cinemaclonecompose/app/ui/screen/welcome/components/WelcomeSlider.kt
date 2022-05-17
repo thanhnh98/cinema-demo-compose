@@ -107,6 +107,7 @@ fun WelcomeSlider(activity: WelcomeActivity) {
                                         activity.startActivity(
                                             Intent(activity, MainActivity::class.java)
                                         )
+                                        activity.finish()
                                     }
                                 }
                             }
@@ -156,7 +157,6 @@ fun WelcomeSlider(activity: WelcomeActivity) {
     }
 }
 
-@Preview
 @Composable
 private fun WelcomeSinglePage(
     welcomeModel: WelcomePageModel,
