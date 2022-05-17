@@ -52,7 +52,7 @@ fun MainScreen(nav: DestinationsNavigator) {
                 userScrollEnabled = true
             ) { pos ->
                 when(pos){
-                    0 -> LoginScreen()
+                    0 -> HomeScreen(nav)
                     1 -> SearchScreen(nav)
                     2 -> FavouriteScreen(nav)
                     3 -> ProfileScreen(nav)

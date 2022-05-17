@@ -13,6 +13,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thanhnguyen.cinemaclonecompose.app.data.local.preferences.IPrefsClient
+import com.thanhnguyen.cinemaclonecompose.app.ui.screen.login.LoginActivity
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.main.MainActivity
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.welcome.WelcomeActivity
 import com.thanhnguyen.cinemaclonecompose.utils.WTF
@@ -20,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 @ExperimentalMaterial3Api
@@ -43,13 +45,20 @@ class RoutingActivity: ComponentActivity() {
         splashScreen.setKeepOnScreenCondition { true }
 
         job = GlobalScope.launch {
-            routingViewModel.shouldShowOnboard.collect{
-                if (it == true){
-                    startActivity(Intent(this@RoutingActivity, MainActivity::class.java))
+            routingViewModel
+                .shouldShowOnboard
+                .combine(prefsClient.isLoggedIn()){ isShown, isLoggedIn ->
+                    isShown to isLoggedIn
                 }
-                else {
-                    startActivity(Intent(this@RoutingActivity, WelcomeActivity::class.java))
-                }
+                .collect {
+                    if (it.first == true) {
+                        if (it.second == true)
+                            startActivity(Intent(this@RoutingActivity, MainActivity::class.java))
+                        else
+                            startActivity(Intent(this@RoutingActivity, LoginActivity::class.java))
+                    } else {
+                        startActivity(Intent(this@RoutingActivity, WelcomeActivity::class.java))
+                    }
                 finish()
                 this.cancel()
             }

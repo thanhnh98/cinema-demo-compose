@@ -24,24 +24,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.thanhnguyen.cinemaclonecompose.R
+import com.thanhnguyen.cinemaclonecompose.app.data.local.preferences.IPrefsClient
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.main.MainActivity
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.home.DotsIndicator
+import com.thanhnguyen.cinemaclonecompose.app.ui.screen.login.LoginActivity
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.welcome.WelcomeActivity
 import com.thanhnguyen.cinemaclonecompose.app.ui.screen.welcome.view_data.WelcomePageModel
 import com.thanhnguyen.cinemaclonecompose.app.ui.theme.*
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
 @OptIn(ExperimentalAnimationApi::class)
 @ExperimentalPagerApi
 @Composable
-fun WelcomeSlider(activity: WelcomeActivity) {
+fun WelcomeSlider(
+    prefs: IPrefsClient,
+    activity: WelcomeActivity,
+) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -104,10 +114,15 @@ fun WelcomeSlider(activity: WelcomeActivity) {
                                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
                                 } else {
                                     withContext(Dispatchers.Main) {
-                                        activity.startActivity(
-                                            Intent(activity, MainActivity::class.java)
-                                        )
-                                        activity.finish()
+                                        prefs.isLoggedIn().collect{
+                                            if (it == true)
+                                                activity.startActivity(Intent(activity, MainActivity::class.java))
+                                            else
+                                                activity.startActivity(Intent(activity, LoginActivity::class.java))
+
+                                            activity.finish()
+                                            cancel()
+                                        }
                                     }
                                 }
                             }

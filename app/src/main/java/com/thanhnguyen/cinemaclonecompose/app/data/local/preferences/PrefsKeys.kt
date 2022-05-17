@@ -4,4 +4,5 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 
 object PrefsKeys {
     val isShownOnboard = booleanPreferencesKey("isShownOnboard")
+    val isLoggedIn = booleanPreferencesKey("isLoggedIn")
 }
